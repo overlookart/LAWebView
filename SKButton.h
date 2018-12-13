@@ -17,7 +17,7 @@ typedef enum : NSUInteger {
 
 @interface SKButton : SKSpriteNode
 @property (nonatomic,assign,readonly) BOOL isHighlighted;
-@property (nonatomic,assign) BOOL selected;
+@property (nonatomic,assign) BOOL selected;//用来记录半自动按钮的状态
 @property (nonatomic,strong,getter=titleLab) SKLabelNode *titleLab;
 
 
