@@ -6,12 +6,16 @@
 //  Copyright © 2018 xzh. All rights reserved.
 //
 
-#import "AnimationUtils.h"
+#import "AnimateUtils.h"
 
-@implementation AnimationUtils
-+(SKAction *)animateActionWithAtlasNamed:(NSString *)atlasNamed  Direction:(AnimationDirection)direction{
+@implementation AnimateUtils
++(SKAction *)animateActionWithAtlasNamed:(NSString *)atlasNamed  Direction:(AnimateDirection)direction{
     NSMutableArray<SKTexture *> *textureFrames = [NSMutableArray array];
     SKTextureAtlas *textureAtlas = [SKTextureAtlas atlasNamed:atlasNamed];
+    if (direction != NO_DIRECTION) {
+        direction = direction - 1;
+    }
+    
     NSString *textureName = [atlasNamed stringByAppendingString:@"_%d_%d_%d"];
     for (int i = 0; i<textureAtlas.textureNames.count; i++) {
         int roleid = 0;
