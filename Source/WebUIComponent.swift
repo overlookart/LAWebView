@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-class WebUIComponent: NSObject {
+public class WebUIComponent: NSObject {
     
 }
 
@@ -20,7 +20,7 @@ extension WebUIComponent: WKUIDelegate {
     ///   - navigationAction: 导致创建新 Webview 的导航操作
     ///   - windowFeatures: 网页请求的窗口功能
     /// - Returns: 必须使用指定的配置创建返回的 Web 视图 WebKit 在返回的 Web 视图中加载请求
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         print("创建 webview")
         return WKWebView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), configuration: configuration)
     }
@@ -29,7 +29,7 @@ extension WebUIComponent: WKUIDelegate {
     /// - Parameter webView: 调用委托方法的 WebView
     /// 您的应用程序应该从视图层次结构中删除 Web 视图并根据需要更新 UI
     /// 例如通过关闭包含的浏览器选项卡或窗口
-    func webViewDidClose(_ webView: WKWebView) {
+    public func webViewDidClose(_ webView: WKWebView) {
         
     }
     
@@ -39,7 +39,7 @@ extension WebUIComponent: WKUIDelegate {
     ///   - message: 要显示的消息
     ///   - frame: 有关其 JavaScript 进程发起此调用的框架的信息
     ///   - completionHandler: 关闭警报面板后调用的完成处理程序
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         
     }
     
@@ -49,7 +49,7 @@ extension WebUIComponent: WKUIDelegate {
     ///   - message: 在确认面板中显示的消息
     ///   - frame: 其 JavaScript 发起此调用的 Web 框架
     ///   - completionHandler: 在确认面板被解除后调用的完成处理程序。 如果用户选择 OK 则传递 true，如果用户选择 Cancel 则传递 false
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         
     }
     
@@ -60,7 +60,7 @@ extension WebUIComponent: WKUIDelegate {
     ///   - defaultText: 要在文本输入字段中显示的初始文本
     ///   - frame: 有关其 JavaScript 进程发起此调用的框架的信息
     ///   - completionHandler: 在文本输入面板被关闭后调用的完成处理程序。 如果用户选择 OK，则传递输入的文本，否则 nil
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         print(prompt);
         
     }

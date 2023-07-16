@@ -7,7 +7,7 @@
 
 import UIKit
 import WebKit
-class TabWebView: BaseWebView {
+open class LAWebView: BaseWebView {
     //配置组件
     private(set) var configComponent: WebConfigComponent
     //脚本组件
@@ -78,7 +78,7 @@ class TabWebView: BaseWebView {
         
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     deinit {
@@ -86,8 +86,8 @@ class TabWebView: BaseWebView {
     }
 }
 
-extension TabWebView: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+extension LAWebView: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.scrollContentOffset = scrollView.contentOffset
         if let didScroll = self.scrollDelegates?.DidScroll {
             didScroll()
@@ -95,53 +95,53 @@ extension TabWebView: UIScrollViewDelegate {
     }
     
     /// 开始滑动
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.scrollBeginDragOffset = scrollView.contentOffset
         if let beginDragging = self.scrollDelegates?.BeginDragging {
             beginDragging()
         }
     }
     ///将要结束拖拽
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if let willEndDragging = self.scrollDelegates?.WillEndDragging {
             willEndDragging(velocity)
         }
     }
     
     /// 结束拖拽
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if let endDragging = self.scrollDelegates?.EndDragging {
             endDragging()
         }
     }
     /// 开始减速
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         if let beginDecelerating = self.scrollDelegates?.BeginDecelerating {
             beginDecelerating()
         }
     }
     /// 停止减速
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if let endDecelerating = self.scrollDelegates?.EndDecelerating {
             endDecelerating()
         }
     }
 }
 
-extension TabWebView: WKNavigationDelegate {
+extension LAWebView: WKNavigationDelegate {
     
     /// Web是否允许导航
     /// - Parameters:
     ///   - webView: webView
     ///   - navigationAction: 有关触发导航请求的操作的描述性信息
     ///   - decisionHandler: Web决定是允许还是取消导航时要调用闭包
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         print("Web是否允许导航")
         guard let decidePolicy = navigationDelegates?.DecidePolicyNavigationAction else { decisionHandler(.allow); return }
         decisionHandler(decidePolicy(navigationAction))
     }
     
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         print("Web开始加载内容")
         guard let didStart = navigationDelegates?.DidStartNavigation else { return }
         didStart(navigation)
@@ -152,7 +152,7 @@ extension TabWebView: WKNavigationDelegate {
     ///   - webView: webView
     ///   - navigationResponse: 有关导航响应的描述性信息
     ///   - decisionHandler: Web决定是允许还是取消导航时要调用闭包
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         print("Web收到响应后是否允许导航")
         guard let decidePolicy = navigationDelegates?.DecidePolicyNavigationResponse else { decisionHandler(.allow); return }
         decisionHandler(decidePolicy(navigationResponse))
@@ -162,7 +162,7 @@ extension TabWebView: WKNavigationDelegate {
     /// - Parameters:
     ///   - webView: webView
     ///   - navigation: 开始加载页面的导航对象
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         print("Web开始接收内容")
         guard let didcommit = navigationDelegates?.DidCommitNavigation else { return }
         didcommit(navigation)
@@ -172,7 +172,7 @@ extension TabWebView: WKNavigationDelegate {
     /// - Parameters:
     ///   - webView: webView
     ///   - navigation: 接收到服务器重定向的导航对象
-    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         print("Web视图收到服务器重定向")
         guard let didReceiveServerRedirect = navigationDelegates?.DidReceiveServerRedirect else { return }
         didReceiveServerRedirect(navigation)
@@ -183,7 +183,7 @@ extension TabWebView: WKNavigationDelegate {
     ///   - webView: webView
     ///   - challenge: 身份验证
     ///   - completionHandler: <#completionHandler description#>
-    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         print("Web需要响应身份验证")
         guard let didReceiveAuthChallenge = navigationDelegates?.DidReceiveAuthChallenge else { completionHandler(.rejectProtectionSpace,nil); return }
         let handler = didReceiveAuthChallenge()
@@ -194,7 +194,7 @@ extension TabWebView: WKNavigationDelegate {
     /// - Parameters:
     ///   - webView: webView
     ///   - navigation: navigation
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("Web加载完成")
         guard let didfinish = navigationDelegates?.DidFinishNavigation else { return }
         didfinish(navigation)
@@ -205,7 +205,7 @@ extension TabWebView: WKNavigationDelegate {
     ///   - webView: webView
     ///   - navigation: navigation
     ///   - error: error
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         print("Web导航期间发生错误")
         guard let didfail = navigationDelegates?.DidFailNavigation else { return }
         didfail(navigation, error)
@@ -216,7 +216,7 @@ extension TabWebView: WKNavigationDelegate {
     ///   - webView: webView
     ///   - navigation: navigation
     ///   - error: error
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         print("Web加载内容时发生错误")
         guard let didfail = navigationDelegates?.DidFailProvisional else { return }
         didfail(navigation, error)
@@ -224,7 +224,7 @@ extension TabWebView: WKNavigationDelegate {
     
     /// Web内容终止
     /// - Parameter webView: webView
-    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         print("Web内容终止")
         guard let didTerminate = navigationDelegates?.DidTerminate else { return }
         didTerminate()
@@ -239,7 +239,7 @@ extension TabWebView: WKNavigationDelegate {
 }
 
 @available(iOS 13.0, *)
-extension TabWebView {
+extension LAWebView {
     public func viewpointSnapshot() async -> UIImage? {
         let config = WKSnapshotConfiguration()
         config.rect = frame

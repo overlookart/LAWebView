@@ -25,7 +25,7 @@ private enum WebObserve {
     }
 }
 
-class BaseWebView: WKWebView {
+open class BaseWebView: WKWebView {
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -77,7 +77,7 @@ class BaseWebView: WKWebView {
         }
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == WebObserve.progress.keyStr {
             if webProgress != nil {
                 webProgress!(Float(self.estimatedProgress))
@@ -103,7 +103,7 @@ class BaseWebView: WKWebView {
         super.init(frame: frame, configuration: configuration)
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-class WebConfigComponent: WKWebViewConfiguration {
+public class WebConfigComponent: WKWebViewConfiguration {
     override init() {
         super.init()
     }
@@ -127,7 +127,7 @@ class WebConfigComponent: WKWebViewConfiguration {
     /// - Parameters:
     ///   - urlSchemeHandler: handler
     ///   - urlScheme: scheme
-    override func setURLSchemeHandler(_ urlSchemeHandler: WKURLSchemeHandler?, forURLScheme urlScheme: String) {
+    public override func setURLSchemeHandler(_ urlSchemeHandler: WKURLSchemeHandler?, forURLScheme urlScheme: String) {
         super.setURLSchemeHandler(urlSchemeHandler, forURLScheme: urlScheme)
     }
     

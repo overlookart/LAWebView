@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-class WebScriptComponent: NSObject {
+public class WebScriptComponent: NSObject {
     var scripts: [LAUserScript] = []
     
     /// 配置脚本
@@ -31,7 +31,7 @@ class WebScriptComponent: NSObject {
 
 // js window.webkit.messageHandlers.xxx.postMessage() 调用
 extension WebScriptComponent: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print(message.name, message.body)
     }
 }
