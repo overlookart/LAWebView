@@ -69,13 +69,13 @@ class TabWebView: BaseWebView {
         if let _ = self.scriptComponent {
             //config script
 //            self.scriptComponent?.scripts.append(LAUserScript(fileName: "test_1", injectionTime: .atDocumentStart, forMainFrameOnly: false, messageName: "lookArt"))
-            self.scriptComponent?.scripts.append(LAUserScript(fileName: "lookArt", injectionTime: .atDocumentStart, forMainFrameOnly: false, messageName: "lookArt"))
+            
             self.scriptComponent?.setupScripts(userContentController: self.configComponent.userContentController)
         }
         if let _ = self.webUIComponent {
             self.uiDelegate = self.webUIComponent
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(forceUpdateTheme), name: NSNotification.Name.LookArtThemeDidChange, object: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -238,6 +238,7 @@ extension TabWebView: WKNavigationDelegate {
     
 }
 
+@available(iOS 13.0, *)
 extension TabWebView {
     public func viewpointSnapshot() async -> UIImage? {
         let config = WKSnapshotConfiguration()

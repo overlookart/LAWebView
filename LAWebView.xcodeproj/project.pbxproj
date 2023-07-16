@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28FCF8822A63FA1D008926EC /* LAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 28FCF8812A63FA1D008926EC /* LAWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28FCF8892A63FAE7008926EC /* LAWebView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 28FCF8882A63FAE7008926EC /* LAWebView.podspec */; };
-		28FCF88C2A63FBD2008926EC /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF88B2A63FBD2008926EC /* BaseWebView.swift */; };
-		28FCF88E2A63FC6E008926EC /* LAWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF88D2A63FC6E008926EC /* LAWebView.swift */; };
-		28FCF8922A63FCAF008926EC /* WebConfigComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF88F2A63FCAF008926EC /* WebConfigComponent.swift */; };
-		28FCF8932A63FCAF008926EC /* WebUIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8902A63FCAF008926EC /* WebUIComponent.swift */; };
-		28FCF8942A63FCAF008926EC /* WebScriptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8912A63FCAF008926EC /* WebScriptComponent.swift */; };
+		28FCF89D2A640340008926EC /* WebConfigComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8982A640340008926EC /* WebConfigComponent.swift */; };
+		28FCF89E2A640340008926EC /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8992A640340008926EC /* BaseWebView.swift */; };
+		28FCF89F2A640340008926EC /* LAWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF89A2A640340008926EC /* LAWebView.swift */; };
+		28FCF8A02A640340008926EC /* WebUIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF89B2A640340008926EC /* WebUIComponent.swift */; };
+		28FCF8A12A640340008926EC /* WebScriptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF89C2A640340008926EC /* WebScriptComponent.swift */; };
+		28FCF8A32A64046F008926EC /* LAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 28FCF8A22A64046F008926EC /* LAWebView.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		28FCF87E2A63FA1D008926EC /* LAWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LAWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		28FCF8812A63FA1D008926EC /* LAWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LAWebView.h; sourceTree = "<group>"; };
 		28FCF8882A63FAE7008926EC /* LAWebView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LAWebView.podspec; sourceTree = "<group>"; };
-		28FCF88B2A63FBD2008926EC /* BaseWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
-		28FCF88D2A63FC6E008926EC /* LAWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAWebView.swift; sourceTree = "<group>"; };
-		28FCF88F2A63FCAF008926EC /* WebConfigComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfigComponent.swift; sourceTree = "<group>"; };
-		28FCF8902A63FCAF008926EC /* WebUIComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebUIComponent.swift; sourceTree = "<group>"; };
-		28FCF8912A63FCAF008926EC /* WebScriptComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebScriptComponent.swift; sourceTree = "<group>"; };
+		28FCF8982A640340008926EC /* WebConfigComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfigComponent.swift; sourceTree = "<group>"; };
+		28FCF8992A640340008926EC /* BaseWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
+		28FCF89A2A640340008926EC /* LAWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAWebView.swift; sourceTree = "<group>"; };
+		28FCF89B2A640340008926EC /* WebUIComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebUIComponent.swift; sourceTree = "<group>"; };
+		28FCF89C2A640340008926EC /* WebScriptComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebScriptComponent.swift; sourceTree = "<group>"; };
+		28FCF8A22A64046F008926EC /* LAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAWebView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,23 +58,23 @@
 		28FCF8802A63FA1D008926EC /* LAWebView */ = {
 			isa = PBXGroup;
 			children = (
-				28FCF88A2A63FB25008926EC /* Source */,
-				28FCF8812A63FA1D008926EC /* LAWebView.h */,
+				28FCF8972A640340008926EC /* Source */,
 			);
 			path = LAWebView;
 			sourceTree = "<group>";
 		};
-		28FCF88A2A63FB25008926EC /* Source */ = {
+		28FCF8972A640340008926EC /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				28FCF88F2A63FCAF008926EC /* WebConfigComponent.swift */,
-				28FCF8912A63FCAF008926EC /* WebScriptComponent.swift */,
-				28FCF8902A63FCAF008926EC /* WebUIComponent.swift */,
-				28FCF88D2A63FC6E008926EC /* LAWebView.swift */,
-				28FCF88B2A63FBD2008926EC /* BaseWebView.swift */,
+				28FCF8A22A64046F008926EC /* LAWebView.h */,
+				28FCF8982A640340008926EC /* WebConfigComponent.swift */,
+				28FCF8992A640340008926EC /* BaseWebView.swift */,
+				28FCF89A2A640340008926EC /* LAWebView.swift */,
+				28FCF89B2A640340008926EC /* WebUIComponent.swift */,
+				28FCF89C2A640340008926EC /* WebScriptComponent.swift */,
 			);
 			path = Source;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -83,7 +83,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28FCF8822A63FA1D008926EC /* LAWebView.h in Headers */,
+				28FCF8A32A64046F008926EC /* LAWebView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,11 +157,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28FCF8922A63FCAF008926EC /* WebConfigComponent.swift in Sources */,
-				28FCF88C2A63FBD2008926EC /* BaseWebView.swift in Sources */,
-				28FCF8932A63FCAF008926EC /* WebUIComponent.swift in Sources */,
-				28FCF8942A63FCAF008926EC /* WebScriptComponent.swift in Sources */,
-				28FCF88E2A63FC6E008926EC /* LAWebView.swift in Sources */,
+				28FCF89F2A640340008926EC /* LAWebView.swift in Sources */,
+				28FCF89E2A640340008926EC /* BaseWebView.swift in Sources */,
+				28FCF8A02A640340008926EC /* WebUIComponent.swift in Sources */,
+				28FCF8A12A640340008926EC /* WebScriptComponent.swift in Sources */,
+				28FCF89D2A640340008926EC /* WebConfigComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

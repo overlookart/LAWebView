@@ -23,7 +23,6 @@ extension WebUIComponent: WKUIDelegate {
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         print("创建 webview")
         return WKWebView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), configuration: configuration)
-        return nil
     }
     
     /// 通知您的应用 DOM 窗口已成功关闭
@@ -63,26 +62,6 @@ extension WebUIComponent: WKUIDelegate {
     ///   - completionHandler: 在文本输入面板被关闭后调用的完成处理程序。 如果用户选择 OK，则传递输入的文本，否则 nil
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         print(prompt);
-        if prompt == "_ThemeConfig_" {
-            let theme = LookArtData.settingTheme()
-            var isNight = "false"
-            var isNightDark = "false"
-            var isDark = "false"
-            if theme == .Dark {
-                isNight = "true"
-                isNightDark = "true"
-                isDark = "true"
-            }
-            if theme == .NigthDark {
-                isNightDark = "true"
-                isNight = "true"
-            }
-            if theme == .Night {
-                isNight = "true"
-            }
-            let themestr = "\(isNight)==\(isNightDark)==\(theme == ThemeType.Green)==\(isDark)"
-            print(themestr)
-            completionHandler(themestr)
-        }
+        
     }
 }

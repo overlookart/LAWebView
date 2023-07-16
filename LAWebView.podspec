@@ -17,15 +17,14 @@ Pod::Spec.new do |spec|
 
   spec.name         = "LAWebView"
   spec.version      = "0.0.1"
-  spec.summary      = "A short description of LAWebView."
+  spec.summary      = "LAWebView 功能扩展"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = <<-DESC
-                   DESC
+  spec.description  = "LAWebView, WKWebView"
 
   spec.homepage     = "https://github.com/overlookart/LAWebView"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -91,10 +90,10 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Source", "Source/**/*.swift"
+  spec.source_files  = "Source", "Source/*.swift"
   spec.exclude_files = "Source/Exclude"
 
-  spec.public_header_files = "Source/**/*.h"
+  spec.public_header_files = "Source/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
