@@ -61,15 +61,12 @@ open class LAWebView: BaseWebView {
     /// - Parameters:
     ///   - config: 配置组件
     ///   - script: 脚本组件
-    init(config: WebConfigComponent, script: WebScriptComponent? = nil, webUI: WebUIComponent? = nil) {
+    public init(config: WebConfigComponent, script: WebScriptComponent? = nil, webUI: WebUIComponent? = nil) {
         self.configComponent = config
         self.scriptComponent = script
         self.webUIComponent = webUI
         super.init(frame: CGRect.zero, configuration: config)
         if let _ = self.scriptComponent {
-            //config script
-//            self.scriptComponent?.scripts.append(LAUserScript(fileName: "test_1", injectionTime: .atDocumentStart, forMainFrameOnly: false, messageName: "lookArt"))
-            
             self.scriptComponent?.setupScripts(userContentController: self.configComponent.userContentController)
         }
         if let _ = self.webUIComponent {
@@ -80,9 +77,6 @@ open class LAWebView: BaseWebView {
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }
 
