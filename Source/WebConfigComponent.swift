@@ -7,8 +7,8 @@
 
 import Foundation
 import WebKit
-public class WebConfigComponent: WKWebViewConfiguration {
-    override init() {
+open class WebConfigComponent: WKWebViewConfiguration {
+    override public init() {
         super.init()
     }
     
@@ -114,7 +114,7 @@ public class WebConfigComponent: WKWebViewConfiguration {
         
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

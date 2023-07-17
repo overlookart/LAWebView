@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 open class LAWebView: BaseWebView {
     //配置组件
-    private(set) var configComponent: WebConfigComponent
+    private(set) var configComponent: WebConfigComponent?
     //脚本组件
     private(set) var scriptComponent: WebScriptComponent?
     //web UI 组件
@@ -61,20 +61,23 @@ open class LAWebView: BaseWebView {
     /// - Parameters:
     ///   - config: 配置组件
     ///   - script: 脚本组件
-    public init(config: WebConfigComponent, script: WebScriptComponent? = nil, webUI: WebUIComponent? = nil) {
+    convenience public init(config: WebConfigComponent, script: WebScriptComponent? = nil, webUI: WebUIComponent? = nil) {
+        self.init(frame: CGRect.zero, configuration: config)
         self.configComponent = config
         self.scriptComponent = script
         self.webUIComponent = webUI
-        super.init(frame: CGRect.zero, configuration: config)
-        if let _ = self.scriptComponent {
-            self.scriptComponent?.setupScripts(userContentController: self.configComponent.userContentController)
+        
+        if let _ = self.scriptComponent, let _ = self.configComponent {
+            self.scriptComponent?.setupScripts(userContentController: self.configComponent!.userContentController)
         }
         if let _ = self.webUIComponent {
             self.uiDelegate = self.webUIComponent
         }
         
     }
-    
+    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
+        super.init(frame: frame, configuration: configuration)
+    }
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
