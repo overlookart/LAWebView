@@ -11,16 +11,20 @@ import WebKit
 // MARK: - webview监听枚举
 private enum WebObserve {
     case title
+    case url
+    case loading
     case progress
     case canGoBack
     case canGoForward
     
     var keyStr: String {
         switch self {
-        case .title: return "title"
-        case .progress: return "estimatedProgress"
-        case .canGoBack: return "canGoBack"
-        case.canGoForward: return "canGoForward"
+            case .title: return "title"
+            case .url: return "URL"
+            case .loading: return "loading"
+            case .progress: return "estimatedProgress"
+            case .canGoBack: return "canGoBack"
+            case .canGoForward: return "canGoForward"
         }
     }
 }
@@ -36,19 +40,36 @@ open class BaseWebView: WKWebView {
     */
     
     private var webTitle: ((String) -> Void)?
+    private var webUrl: ((URL?) -> Void)?
+    private var webLoading: ((Bool) -> Void)?
     private var webProgress: ((Float) -> Void)?
     private var webCanGoBack: ((Bool) -> Void)?
     private var webCanGoForward: ((Bool) -> Void)?
     
-    var webObserves: (Title:((String) -> Void)?, Progress:((Float) -> Void)?, CanGoBack:((Bool) -> Void)?, CanGoForward:((Bool) -> Void)?)? {
+    public var webObserves: (Title:((String) -> Void)?, Url:((URL?) -> Void)?, Loading:((Bool) -> Void)?, Progress:((Float) -> Void)?, CanGoBack:((Bool) -> Void)?, CanGoForward:((Bool) -> Void)?)? {
         didSet {
-            
             if let webtitle = webObserves?.Title {
                 if let _ = webTitle {
                     self.removeObserver(self, forKeyPath: WebObserve.title.keyStr)
                 }
                 webTitle = webtitle
                 self.addObserver(self, forKeyPath: WebObserve.title.keyStr, options: .new, context: nil)
+            }
+            
+            if let weburl = webObserves?.Url {
+                if let _ = webUrl {
+                    self.removeObserver(self, forKeyPath: WebObserve.url.keyStr)
+                }
+                webUrl = weburl
+                self.addObserver(self, forKeyPath: WebObserve.url.keyStr,options: .new, context: nil)
+            }
+            
+            if let webloading = webObserves?.Loading {
+                if let _ = webLoading {
+                    self.removeObserver(self, forKeyPath: WebObserve.loading.keyStr)
+                }
+                webLoading = webloading
+                self.addObserver(self, forKeyPath: WebObserve.loading.keyStr, options: .new, context: nil)
             }
             
             if let webprogress = webObserves?.Progress {
@@ -79,21 +100,17 @@ open class BaseWebView: WKWebView {
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == WebObserve.progress.keyStr {
-            if webProgress != nil {
-                webProgress!(Float(self.estimatedProgress))
-            }
+            webProgress?(Float(self.estimatedProgress))
         }else if keyPath == WebObserve.title.keyStr {
-            if webTitle != nil {
-                webTitle!(self.title ?? "Null")
-            }
+            webTitle?(self.title ?? "Null")
+        }else if keyPath == WebObserve.url.keyStr {
+            webUrl?(self.url)
+        }else if keyPath == WebObserve.loading.keyStr {
+            webLoading?(self.isLoading)
         }else if keyPath == WebObserve.canGoBack.keyStr {
-            if webCanGoBack != nil {
-                webCanGoBack!(self.canGoBack)
-            }
+            webCanGoBack?(self.canGoBack)
         }else if keyPath == WebObserve.canGoForward.keyStr {
-            if webCanGoForward != nil {
-                webCanGoForward!(self.canGoForward)
-            }
+            webCanGoForward?(self.canGoForward)
         }else{
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
@@ -114,6 +131,14 @@ open class BaseWebView: WKWebView {
         
         if let _ = webTitle {
             self.removeObserver(self, forKeyPath: WebObserve.title.keyStr)
+        }
+        
+        if let _ = webUrl {
+            self.removeObserver(self, forKeyPath: WebObserve.url.keyStr)
+        }
+        
+        if let _ = webLoading {
+            self.removeObserver(self, forKeyPath: WebObserve.loading.keyStr)
         }
         
         if let _ = webCanGoBack {

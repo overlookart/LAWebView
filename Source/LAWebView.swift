@@ -20,16 +20,18 @@ open class LAWebView: BaseWebView {
     /// 当前的offset
     private(set) var scrollContentOffset: CGPoint = CGPoint.zero
     /// 滑动代理
-    var scrollDelegates: (
+    
+    public var scrollDelegates: (
         DidScroll:(() -> Void)?,
         BeginDragging:(() -> Void)?,
         WillEndDragging:((CGPoint) -> Void)?,
         EndDragging:(() -> Void)?,
         BeginDecelerating:(() -> Void)?,
-        EndDecelerating:(() -> Void)?)?
+        EndDecelerating:(() -> Void)?,
+        DidScrollToTop:(() -> Void)?)?
     
-    /// web导航代理毁掉
-    var navigationDelegates: (
+    /// web导航代理
+    public var navigationDelegates: (
         DecidePolicyNavigationAction:((WKNavigationAction) -> WKNavigationActionPolicy)?,
         DidStartNavigation:((WKNavigation) -> Void)?,
         DecidePolicyNavigationResponse:((WKNavigationResponse) -> WKNavigationResponsePolicy)?,
@@ -84,44 +86,38 @@ open class LAWebView: BaseWebView {
 }
 
 extension LAWebView: UIScrollViewDelegate {
+    /// 滑动中
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.scrollContentOffset = scrollView.contentOffset
-        if let didScroll = self.scrollDelegates?.DidScroll {
-            didScroll()
-        }
+        self.scrollDelegates?.DidScroll?()
     }
     
-    /// 开始滑动
+    /// 开始拖拽
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.scrollBeginDragOffset = scrollView.contentOffset
-        if let beginDragging = self.scrollDelegates?.BeginDragging {
-            beginDragging()
-        }
+        self.scrollDelegates?.BeginDragging?()
     }
     ///将要结束拖拽
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if let willEndDragging = self.scrollDelegates?.WillEndDragging {
-            willEndDragging(velocity)
-        }
+        self.scrollDelegates?.WillEndDragging?(velocity)
     }
     
     /// 结束拖拽
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if let endDragging = self.scrollDelegates?.EndDragging {
-            endDragging()
-        }
+        self.scrollDelegates?.EndDragging?()
     }
     /// 开始减速
     public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        if let beginDecelerating = self.scrollDelegates?.BeginDecelerating {
-            beginDecelerating()
-        }
+        self.scrollDelegates?.BeginDecelerating?()
     }
     /// 停止减速
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if let endDecelerating = self.scrollDelegates?.EndDecelerating {
-            endDecelerating()
-        }
+        self.scrollDelegates?.EndDecelerating?()
+          
+    }
+    
+    public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        self.scrollDelegates?.DidScrollToTop?()
     }
 }
 
@@ -133,13 +129,11 @@ extension LAWebView: WKNavigationDelegate {
     ///   - navigationAction: 有关触发导航请求的操作的描述性信息
     ///   - decisionHandler: Web决定是允许还是取消导航时要调用闭包
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        print("Web是否允许导航")
         guard let decidePolicy = navigationDelegates?.DecidePolicyNavigationAction else { decisionHandler(.allow); return }
         decisionHandler(decidePolicy(navigationAction))
     }
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        print("Web开始加载内容")
         guard let didStart = navigationDelegates?.DidStartNavigation else { return }
         didStart(navigation)
     }
@@ -150,7 +144,6 @@ extension LAWebView: WKNavigationDelegate {
     ///   - navigationResponse: 有关导航响应的描述性信息
     ///   - decisionHandler: Web决定是允许还是取消导航时要调用闭包
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        print("Web收到响应后是否允许导航")
         guard let decidePolicy = navigationDelegates?.DecidePolicyNavigationResponse else { decisionHandler(.allow); return }
         decisionHandler(decidePolicy(navigationResponse))
     }
@@ -160,7 +153,6 @@ extension LAWebView: WKNavigationDelegate {
     ///   - webView: webView
     ///   - navigation: 开始加载页面的导航对象
     public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        print("Web开始接收内容")
         guard let didcommit = navigationDelegates?.DidCommitNavigation else { return }
         didcommit(navigation)
     }
@@ -170,7 +162,6 @@ extension LAWebView: WKNavigationDelegate {
     ///   - webView: webView
     ///   - navigation: 接收到服务器重定向的导航对象
     public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        print("Web视图收到服务器重定向")
         guard let didReceiveServerRedirect = navigationDelegates?.DidReceiveServerRedirect else { return }
         didReceiveServerRedirect(navigation)
     }
@@ -181,7 +172,6 @@ extension LAWebView: WKNavigationDelegate {
     ///   - challenge: 身份验证
     ///   - completionHandler: <#completionHandler description#>
     public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        print("Web需要响应身份验证")
         guard let didReceiveAuthChallenge = navigationDelegates?.DidReceiveAuthChallenge else { completionHandler(.rejectProtectionSpace,nil); return }
         let handler = didReceiveAuthChallenge()
         completionHandler(handler.AuthChallenge,handler.Credential)
@@ -192,7 +182,6 @@ extension LAWebView: WKNavigationDelegate {
     ///   - webView: webView
     ///   - navigation: navigation
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("Web加载完成")
         guard let didfinish = navigationDelegates?.DidFinishNavigation else { return }
         didfinish(navigation)
     }
@@ -203,7 +192,6 @@ extension LAWebView: WKNavigationDelegate {
     ///   - navigation: navigation
     ///   - error: error
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("Web导航期间发生错误")
         guard let didfail = navigationDelegates?.DidFailNavigation else { return }
         didfail(navigation, error)
     }
@@ -214,7 +202,6 @@ extension LAWebView: WKNavigationDelegate {
     ///   - navigation: navigation
     ///   - error: error
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        print("Web加载内容时发生错误")
         guard let didfail = navigationDelegates?.DidFailProvisional else { return }
         didfail(navigation, error)
     }
@@ -222,16 +209,9 @@ extension LAWebView: WKNavigationDelegate {
     /// Web内容终止
     /// - Parameter webView: webView
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        print("Web内容终止")
         guard let didTerminate = navigationDelegates?.DidTerminate else { return }
         didTerminate()
     }
-    
-    
-    @objc func forceUpdateTheme(){
-        self.evaluateJavaScript("window.lookart.forceUpdateTheme()", completionHandler: nil)
-    }
-    
     
 }
 
@@ -240,7 +220,6 @@ extension LAWebView {
     public func viewpointSnapshot() async -> UIImage? {
         let config = WKSnapshotConfiguration()
         config.rect = frame
-        
         let img = try? await self.takeSnapshot(configuration: config)
         if img != nil {
             debugPrint("页面快照")

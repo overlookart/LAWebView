@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28FCF8BE2A657451008926EC /* LAWebView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 28FCF8BD2A657451008926EC /* LAWebView.podspec */; };
+		28FCF8C62A65745E008926EC /* WebConfigComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C02A65745E008926EC /* WebConfigComponent.swift */; };
+		28FCF8C72A65745E008926EC /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C12A65745E008926EC /* BaseWebView.swift */; };
+		28FCF8C82A65745E008926EC /* LAWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C22A65745E008926EC /* LAWebView.swift */; };
+		28FCF8C92A65745E008926EC /* WebUIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C32A65745E008926EC /* WebUIComponent.swift */; };
+		28FCF8CA2A65745E008926EC /* WebScriptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C42A65745E008926EC /* WebScriptComponent.swift */; };
+		28FCF8CB2A65745E008926EC /* LAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 28FCF8C52A65745E008926EC /* LAWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E93FCDF22A65310F0095BEC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCDF12A65310F0095BEC0 /* AppDelegate.swift */; };
 		E93FCDF42A65310F0095BEC0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCDF32A65310F0095BEC0 /* SceneDelegate.swift */; };
 		E93FCDF62A65310F0095BEC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCDF52A65310F0095BEC0 /* ViewController.swift */; };
@@ -15,13 +22,6 @@
 		E93FCDFE2A6531140095BEC0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E93FCDFC2A6531140095BEC0 /* LaunchScreen.storyboard */; };
 		E93FCE102A6531A60095BEC0 /* LAWebView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93FCE0A2A6531A50095BEC0 /* LAWebView.framework */; };
 		E93FCE112A6531A60095BEC0 /* LAWebView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E93FCE0A2A6531A50095BEC0 /* LAWebView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E93FCE1D2A6532530095BEC0 /* WebConfigComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCE172A6532530095BEC0 /* WebConfigComponent.swift */; };
-		E93FCE1E2A6532530095BEC0 /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCE182A6532530095BEC0 /* BaseWebView.swift */; };
-		E93FCE1F2A6532530095BEC0 /* LAWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCE192A6532530095BEC0 /* LAWebView.swift */; settings = {ATTRIBUTES = (Public, ); }; };
-		E93FCE202A6532530095BEC0 /* WebUIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCE1A2A6532530095BEC0 /* WebUIComponent.swift */; };
-		E93FCE212A6532530095BEC0 /* WebScriptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCE1B2A6532530095BEC0 /* WebScriptComponent.swift */; };
-		E93FCE222A6532530095BEC0 /* LAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = E93FCE1C2A6532530095BEC0 /* LAWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E93FCE272A65383E0095BEC0 /* LAWebView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = E93FCE262A65383E0095BEC0 /* LAWebView.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +49,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		28FCF8BD2A657451008926EC /* LAWebView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LAWebView.podspec; path = ../../LAWebView.podspec; sourceTree = "<group>"; };
+		28FCF8C02A65745E008926EC /* WebConfigComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfigComponent.swift; sourceTree = "<group>"; };
+		28FCF8C12A65745E008926EC /* BaseWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
+		28FCF8C22A65745E008926EC /* LAWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAWebView.swift; sourceTree = "<group>"; };
+		28FCF8C32A65745E008926EC /* WebUIComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebUIComponent.swift; sourceTree = "<group>"; };
+		28FCF8C42A65745E008926EC /* WebScriptComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebScriptComponent.swift; sourceTree = "<group>"; };
+		28FCF8C52A65745E008926EC /* LAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAWebView.h; sourceTree = "<group>"; };
+		28FCF8CD2A657CD7008926EC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E93FCDEE2A65310F0095BEC0 /* LAWebViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LAWebViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93FCDF12A65310F0095BEC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E93FCDF32A65310F0095BEC0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,13 +66,6 @@
 		E93FCDFD2A6531140095BEC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E93FCDFF2A6531140095BEC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E93FCE0A2A6531A50095BEC0 /* LAWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LAWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E93FCE172A6532530095BEC0 /* WebConfigComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfigComponent.swift; sourceTree = "<group>"; };
-		E93FCE182A6532530095BEC0 /* BaseWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
-		E93FCE192A6532530095BEC0 /* LAWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAWebView.swift; sourceTree = "<group>"; };
-		E93FCE1A2A6532530095BEC0 /* WebUIComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebUIComponent.swift; sourceTree = "<group>"; };
-		E93FCE1B2A6532530095BEC0 /* WebScriptComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebScriptComponent.swift; sourceTree = "<group>"; };
-		E93FCE1C2A6532530095BEC0 /* LAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAWebView.h; sourceTree = "<group>"; };
-		E93FCE262A65383E0095BEC0 /* LAWebView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LAWebView.podspec; path = ../../LAWebView.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,12 +87,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28FCF8BC2A657422008926EC /* LAWebView */ = {
+			isa = PBXGroup;
+			children = (
+				28FCF8BD2A657451008926EC /* LAWebView.podspec */,
+				28FCF8BF2A65745E008926EC /* Source */,
+			);
+			path = LAWebView;
+			sourceTree = "<group>";
+		};
+		28FCF8BF2A65745E008926EC /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				28FCF8C02A65745E008926EC /* WebConfigComponent.swift */,
+				28FCF8C12A65745E008926EC /* BaseWebView.swift */,
+				28FCF8C22A65745E008926EC /* LAWebView.swift */,
+				28FCF8C32A65745E008926EC /* WebUIComponent.swift */,
+				28FCF8C42A65745E008926EC /* WebScriptComponent.swift */,
+				28FCF8C52A65745E008926EC /* LAWebView.h */,
+			);
+			name = Source;
+			path = ../../Source;
+			sourceTree = "<group>";
+		};
+		28FCF8CC2A657CD7008926EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				28FCF8CD2A657CD7008926EC /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E93FCDE52A65310F0095BEC0 = {
 			isa = PBXGroup;
 			children = (
+				28FCF8BC2A657422008926EC /* LAWebView */,
 				E93FCDF02A65310F0095BEC0 /* LAWebViewDemo */,
-				E93FCE0B2A6531A60095BEC0 /* LAWebView */,
 				E93FCDEF2A65310F0095BEC0 /* Products */,
+				28FCF8CC2A657CD7008926EC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,29 +151,6 @@
 			path = LAWebViewDemo;
 			sourceTree = "<group>";
 		};
-		E93FCE0B2A6531A60095BEC0 /* LAWebView */ = {
-			isa = PBXGroup;
-			children = (
-				E93FCE262A65383E0095BEC0 /* LAWebView.podspec */,
-				E93FCE162A6532530095BEC0 /* Source */,
-			);
-			path = LAWebView;
-			sourceTree = "<group>";
-		};
-		E93FCE162A6532530095BEC0 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				E93FCE172A6532530095BEC0 /* WebConfigComponent.swift */,
-				E93FCE182A6532530095BEC0 /* BaseWebView.swift */,
-				E93FCE192A6532530095BEC0 /* LAWebView.swift */,
-				E93FCE1A2A6532530095BEC0 /* WebUIComponent.swift */,
-				E93FCE1B2A6532530095BEC0 /* WebScriptComponent.swift */,
-				E93FCE1C2A6532530095BEC0 /* LAWebView.h */,
-			);
-			name = Source;
-			path = ../../Source;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -148,7 +158,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E93FCE222A6532530095BEC0 /* LAWebView.h in Headers */,
+				28FCF8CB2A65745E008926EC /* LAWebView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,7 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E93FCE272A65383E0095BEC0 /* LAWebView.podspec in Resources */,
+				28FCF8BE2A657451008926EC /* LAWebView.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,11 +275,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E93FCE1E2A6532530095BEC0 /* BaseWebView.swift in Sources */,
-				E93FCE202A6532530095BEC0 /* WebUIComponent.swift in Sources */,
-				E93FCE212A6532530095BEC0 /* WebScriptComponent.swift in Sources */,
-				E93FCE1D2A6532530095BEC0 /* WebConfigComponent.swift in Sources */,
-				E93FCE1F2A6532530095BEC0 /* LAWebView.swift in Sources */,
+				28FCF8C82A65745E008926EC /* LAWebView.swift in Sources */,
+				28FCF8C72A65745E008926EC /* BaseWebView.swift in Sources */,
+				28FCF8C92A65745E008926EC /* WebUIComponent.swift in Sources */,
+				28FCF8CA2A65745E008926EC /* WebScriptComponent.swift in Sources */,
+				28FCF8C62A65745E008926EC /* WebConfigComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
