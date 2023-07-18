@@ -48,6 +48,7 @@ open class LAWebView: BaseWebView {
     }
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
+
     }
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -58,6 +59,8 @@ open class LAWebView: BaseWebView {
 
 
 extension LAWebView {
+    
+    //MARK: - load
     
     public func loadUrl(urlStr: String, cachePolicy:URLRequest.CachePolicy = .useProtocolCachePolicy, timeout: TimeInterval = 60.0) throws {
         var urls: String = ""
@@ -71,6 +74,10 @@ extension LAWebView {
         urls = urls.replacingOccurrences(of: "%23", with: "#")
         guard let url = URL(string: urls) else { throw URLError(.badURL) }
         load(URLRequest(url: url))
+    }
+    
+    public func runJavaScript(js: LAJavaScript){
+        self.evaluateJavaScript(js.js, completionHandler: js.handler)
     }
     
     @available(iOS 13.0, *)

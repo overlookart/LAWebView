@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         })
         
         do {
-            try web.loadUrl(urlStr: "https://www.baidu.com")
+            try web.loadUrl(urlStr: "https://swiftgg.gitbook.io")
         } catch  {
             debugPrint(error)
         }
