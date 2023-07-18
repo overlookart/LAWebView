@@ -34,7 +34,12 @@ class ViewController: UIViewController {
             debugPrint("web->canGoForward:",canGoForward)
         })
         
-        web.load(URLRequest(url: URL(string: "https://www.baidu.com")!))
+        do {
+            try web.loadUrl(urlStr: "https://www.baidu.com")
+        } catch  {
+            debugPrint(error)
+        }
+        
         
         /// 滚动代理
         web.scrollDelegates = (DidScroll:{
@@ -71,9 +76,9 @@ class ViewController: UIViewController {
         },DidFinishNavigation: { nav in
             debugPrint("导航完成")
         },DidFailNavigation:{ nav, err in
-            debugPrint("导航失败")
+            debugPrint("导航失败", err)
         },DidFailProvisional:{ nav, err in
-            
+            debugPrint("加载内容失败", err)
         },DidTerminate:{
             
         })

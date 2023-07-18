@@ -138,3 +138,72 @@ open class WebConfigComponent: WKWebViewConfiguration {
         }
     }
 }
+
+extension WKWebViewConfiguration {
+    
+    /// 添加脚本消息处理
+    /// - Parameters:
+    ///   - handler: 消息处理
+    ///   - name: 脚本消息名称
+    func addScriptMessageHandler(_ handler: WKScriptMessageHandler, name: String) {
+        userContentController.removeScriptMessageHandler(forName: name)
+        userContentController.add(handler, name: name)
+    }
+    
+    
+    
+    //MARK: - UserScript
+    
+    /// 添加用户脚本
+    /// - Parameters:
+    ///   - script: js脚本代码
+    ///   - injectionTime: 注入时间
+    ///   - forMainFrameOnly: 是否仅在主Frame注入
+    ///   - world: 关键词
+    func addUserScript(script: String, injectionTime: WKUserScriptInjectionTime, forMainFrameOnly: Bool, world: String? = nil) {
+        let userScript = WKUserScript(source: script, injectionTime: injectionTime, forMainFrameOnly: forMainFrameOnly)
+        addUserScript(script: userScript)
+    }
+    
+    /// 添加用户脚本
+    /// - Parameters:
+    ///   - fileName: js脚本文件名
+    ///   - injectionTime: 注入时间
+    ///   - forMainFrameOnly: 是否仅在主Document注入
+    ///   - world: 关键词
+    func addUserScript(fileName: String, injectionTime: WKUserScriptInjectionTime, forMainFrameOnly: Bool, world: String? = nil) throws {
+        do {
+            let source = try String(contentsOfFile: Bundle.main.path(forResource: fileName, ofType: "js") ?? "", encoding: .utf8)
+            let userScript = WKUserScript(source: source, injectionTime: injectionTime, forMainFrameOnly: forMainFrameOnly)
+            addUserScript(script: userScript)
+        } catch  {
+            throw error
+        }
+    }
+    
+    /// 添加用户脚本
+    /// - Parameter script: 用户脚本
+    func addUserScript(script: WKUserScript) {
+        userContentController.addUserScript(script)
+    }
+    
+    /// 移除所有的用户脚本
+    func removeAllUserScript() {
+        if userContentController.userScripts.count > 0 {
+            userContentController.removeAllUserScripts()
+        }
+    }
+    
+    //MARK: - UserRule
+    /// 添加用户过滤规则
+    @available(iOS 11.0, *)
+    func addUserRule(rulelist: WKContentRuleList) {
+        userContentController.add(rulelist)
+    }
+    
+    /// 移除用户过滤规则
+    @available(iOS 11.0, *)
+    func removeUserRule(rulelist: WKContentRuleList) {
+        userContentController.remove(rulelist)
+    }
+}
