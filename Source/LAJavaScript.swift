@@ -11,22 +11,63 @@ private protocol JavaScriptAPI {
     var js: String { get }
     var handler: ((Any?, Error?) -> Void)? { get }
 }
-
+//snippets
 private protocol JavaScriptSyntax {
     var code: String { get }
 }
 
-public enum LAJavaScript {
+
+enum DomSyntaxTree: String {
+    case body = ".body"
+    case head = ".head"
+}
+
+/// element api
+private protocol DocumentAPI {
+    
+}
+
+typealias DomApiSyntax = String
+
+extension DocumentAPI {
+    
+    var document: DomApiSyntax {
+        return "document"
+    }
+    
+    func getElementBy(Id id: String) -> DomApiSyntax {
+        return ".getElementById('\(id)')"
+    }
+    
+    func getElementBy(Name name: String) -> DomApiSyntax {
+        return ".getElementsByName('\(name)')"
+    }
+    
+    func getElementBy(TagName tagName: String) -> DomApiSyntax {
+        return ".getElementsByTagName('\(tagName)')"
+    }
+    
+    func getElementBy(ClassName className: String) -> DomApiSyntax{
+        return ".getElementsByClassName('\(className)')"
+    }
+}
+
+public enum Element{
+    case body
+    case head
+}
+
+/// js 代码片段
+public enum LAJSSnippet {
     
     /// 获取 Element 的方式
-    public enum ElementByType: JavaScriptSyntax, Equatable {
-        
-        
+    public enum ElementByType: JavaScriptSyntax {
         case Id(String)
         case Name(String)
         case TagName(String)
         case ClassName(String)
         var code: String{
+            
             switch self {
                 case .Id(let id):
                     return ".getElementById('\(id)')"
@@ -52,11 +93,18 @@ public enum LAJavaScript {
 
 public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
-extension LAJavaScript: JavaScriptAPI {
+extension LAJSSnippet: JavaScriptAPI {
     var js: String {
         switch self {
             case .getElement(let type, let index, _):
-                return "document" + type.code + (type == LAJavaScript.ElementByType.Id("") ? "" : "[\(index)]" ) + ".outerHTML"
+                var j = "document" + type.code
+            if case .Id = type {
+
+            }else{
+                j = j + "[\(index)]"
+            }
+            j = j + ".outerHTML"
+                return j
             
             case .clientWidth(_):
                 return "document.body.clientWidth"
