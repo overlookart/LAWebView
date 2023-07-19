@@ -35,6 +35,7 @@ class ViewController: UIViewController {
         })
         
         do {
+            //https://developer.mozilla.org/zh-CN/docs/Web/API/Document
             try web.loadUrl(urlStr: "https://swift.gg")
         } catch  {
             debugPrint(error)
