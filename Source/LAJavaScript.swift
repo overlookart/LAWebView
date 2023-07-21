@@ -7,113 +7,105 @@
 
 import Foundation
 
+public typealias LAJSHandler = ((Any?, Error?) -> Void)
+
 private protocol JavaScriptAPI {
     var js: String { get }
-    var handler: ((Any?, Error?) -> Void)? { get }
+    var handler: LAJSHandler? { get }
+    func makeJS(_ documentApis: DocumentApi...) -> String
 }
-//snippets
+
+
 private protocol JavaScriptSyntax {
     var code: String { get }
 }
 
 
-enum DomSyntaxTree: String {
-    case body = ".body"
-    case head = ".head"
-}
-
-/// element api
-private protocol DocumentAPI {
-    
-}
-
-typealias DomApiSyntax = String
-
-extension DocumentAPI {
-    
-    var document: DomApiSyntax {
-        return "document"
-    }
-    
-    func getElementBy(Id id: String) -> DomApiSyntax {
-        return ".getElementById('\(id)')"
-    }
-    
-    func getElementBy(Name name: String) -> DomApiSyntax {
-        return ".getElementsByName('\(name)')"
-    }
-    
-    func getElementBy(TagName tagName: String) -> DomApiSyntax {
-        return ".getElementsByTagName('\(tagName)')"
-    }
-    
-    func getElementBy(ClassName className: String) -> DomApiSyntax{
-        return ".getElementsByClassName('\(className)')"
-    }
-}
-
-public enum Element{
+/// Dom 语法
+enum DocumentApi {
+    case window
+    case document
     case body
     case head
+    case getElementById(String)
+    case getElementsByName(String)
+    case getElementsByTagName(String)
+    case getElementsByClassName(String)
+    case item(UInt)
+    case clientWidth
+    case clientHeight
+    case scrollHeight
+    case outerHTML
 }
+
+extension DocumentApi: JavaScriptSyntax {
+    var code: String {
+        switch self {
+            case .window: return "window"
+            case .document: return "document"
+            case .body: return "body"
+            case .head: return "head"
+            case .getElementById(let id): return "getElementById('\(id)')"
+            case .getElementsByName(let name): return "getElementsByName('\(name)')"
+            case .getElementsByTagName(let tagName): return "getElementsByTagName('\(tagName)')"
+            case .getElementsByClassName(let className): return "getElementsByClassName('\(className)')"
+            case .item(let index): return "item(\(index))"
+            case .clientWidth: return "clientWidth"
+            case .clientHeight: return "clientHeight"
+            case .scrollHeight: return "scrollHeight"
+            case .outerHTML: return "outerHTML"
+        }
+    }
+}
+
+
+
 
 /// js 代码片段
 public enum LAJSSnippet {
     
     /// 获取 Element 的方式
-    public enum ElementByType: JavaScriptSyntax {
+    public enum ElementByType {
         case Id(String)
         case Name(String)
         case TagName(String)
         case ClassName(String)
-        var code: String{
-            
-            switch self {
-                case .Id(let id):
-                    return ".getElementById('\(id)')"
-                case .Name(let name):
-                    return ".getElementsByName('\(name)')"
-                case .TagName(let tagName):
-                    return ".getElementsByTagName('\(tagName)')"
-                case .ClassName(let className):
-                    return ".getElementsByClassName('\(className)')"
-            }
-        }
+        
     }
     
     /// 通过 tagName 获取 element
-    case getElement(type:ElementByType, index: Int = 0, handler: LAJSHandler?)
-    
-    
+    case getElement(type:ElementByType, index: UInt = 0, handler: LAJSHandler?)
     case clientWidth(handler: LAJSHandler?)
     case clientHeight(handler: LAJSHandler?)
     case scrollHeight(handler: LAJSHandler?)
     
 }
 
-public typealias LAJSHandler = ((Any?, Error?) -> Void)
+
 
 extension LAJSSnippet: JavaScriptAPI {
     var js: String {
         switch self {
             case .getElement(let type, let index, _):
-                var j = "document" + type.code
-            if case .Id = type {
-
-            }else{
-                j = j + "[\(index)]"
+                
+            if case .Id(let id) = type {
+                return makeJS(.document,.getElementById(id),.outerHTML)
+            }else if case .Name(let name) = type {
+                return makeJS(.document,.getElementsByName(name),.item(index),.outerHTML)
+            }else if case .TagName(let tagName) = type {
+                return makeJS(.document,.getElementsByTagName(tagName),.item(index),.outerHTML)
+            }else if case .ClassName(let className) = type {
+                return makeJS(.document,.getElementsByClassName(className),.item(index),.outerHTML)
             }
-            j = j + ".outerHTML"
-                return j
+            return ""
+            
             
             case .clientWidth(_):
-                return "document.body.clientWidth"
+                return makeJS(.document,.body,.clientWidth)
             case .clientHeight(_):
-                return "document.body.clientHeight"
+                return makeJS(.document,.body,.clientHeight)
             case .scrollHeight(_):
-                return "document.body.scrollHeight"
-            
-            
+                return makeJS(.document,.body,.scrollHeight)
         }
     }
     
@@ -128,5 +120,14 @@ extension LAJSSnippet: JavaScriptAPI {
             case .scrollHeight(let handler):
                 return handler
         }
+    }
+    
+    func makeJS(_ documentApis: DocumentApi...) -> String {
+         let str =  documentApis.map{
+            
+            return $0.code
+        }.joined(separator: ".")
+        print("abc",str)
+        return str
     }
 }
