@@ -35,15 +35,6 @@ open class BaseWebView: WKWebView {
     private(set) var scrollBeginDragOffset: CGPoint = CGPoint.zero
     /// 当前的offset
     private(set) var scrollContentOffset: CGPoint = CGPoint.zero
-    /// scrollDelegates
-    public var scrollDelegates: (
-        DidScroll:(() -> Void)?,
-        BeginDragging:(() -> Void)?,
-        WillEndDragging:((CGPoint) -> Void)?,
-        EndDragging:(() -> Void)?,
-        BeginDecelerating:(() -> Void)?,
-        EndDecelerating:(() -> Void)?,
-        DidScrollToTop:(() -> Void)?)?
     
     /// web导航代理
     public var navigationDelegates: (
@@ -174,42 +165,6 @@ open class BaseWebView: WKWebView {
         if let _ = webCanGoForward {
             self.removeObserver(self, forKeyPath: WebObserve.canGoForward.keyStr)
         }
-    }
-}
-
-extension BaseWebView: UIScrollViewDelegate {
-    /// 滑动中
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.scrollContentOffset = scrollView.contentOffset
-        self.scrollDelegates?.DidScroll?()
-    }
-    
-    /// 开始拖拽
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.scrollBeginDragOffset = scrollView.contentOffset
-        self.scrollDelegates?.BeginDragging?()
-    }
-    ///将要结束拖拽
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        self.scrollDelegates?.WillEndDragging?(velocity)
-    }
-    
-    /// 结束拖拽
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.scrollDelegates?.EndDragging?()
-    }
-    /// 开始减速
-    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        self.scrollDelegates?.BeginDecelerating?()
-    }
-    /// 停止减速
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.scrollDelegates?.EndDecelerating?()
-          
-    }
-    
-    public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        self.scrollDelegates?.DidScrollToTop?()
     }
 }
 
