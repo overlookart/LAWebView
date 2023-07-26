@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		28FCF8BE2A657451008926EC /* LAWebView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 28FCF8BD2A657451008926EC /* LAWebView.podspec */; };
-		28FCF8C62A65745E008926EC /* WebConfigComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C02A65745E008926EC /* WebConfigComponent.swift */; };
+		28FCF8C62A65745E008926EC /* WebConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C02A65745E008926EC /* WebConfig.swift */; };
 		28FCF8C72A65745E008926EC /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C12A65745E008926EC /* BaseWebView.swift */; };
 		28FCF8C82A65745E008926EC /* LAWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C22A65745E008926EC /* LAWebView.swift */; };
 		28FCF8C92A65745E008926EC /* WebUIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C32A65745E008926EC /* WebUIComponent.swift */; };
-		28FCF8CA2A65745E008926EC /* WebScriptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C42A65745E008926EC /* WebScriptComponent.swift */; };
 		28FCF8CB2A65745E008926EC /* LAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 28FCF8C52A65745E008926EC /* LAWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28FCF8D32A66E89F008926EC /* LAJavaScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8D22A66E89F008926EC /* LAJavaScript.swift */; };
 		E93FCDF22A65310F0095BEC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FCDF12A65310F0095BEC0 /* AppDelegate.swift */; };
@@ -51,11 +50,10 @@
 
 /* Begin PBXFileReference section */
 		28FCF8BD2A657451008926EC /* LAWebView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LAWebView.podspec; path = ../../LAWebView.podspec; sourceTree = "<group>"; };
-		28FCF8C02A65745E008926EC /* WebConfigComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfigComponent.swift; sourceTree = "<group>"; };
+		28FCF8C02A65745E008926EC /* WebConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfig.swift; sourceTree = "<group>"; };
 		28FCF8C12A65745E008926EC /* BaseWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
 		28FCF8C22A65745E008926EC /* LAWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAWebView.swift; sourceTree = "<group>"; };
 		28FCF8C32A65745E008926EC /* WebUIComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebUIComponent.swift; sourceTree = "<group>"; };
-		28FCF8C42A65745E008926EC /* WebScriptComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebScriptComponent.swift; sourceTree = "<group>"; };
 		28FCF8C52A65745E008926EC /* LAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAWebView.h; sourceTree = "<group>"; };
 		28FCF8CD2A657CD7008926EC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		28FCF8D22A66E89F008926EC /* LAJavaScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAJavaScript.swift; sourceTree = "<group>"; };
@@ -101,11 +99,10 @@
 		28FCF8BF2A65745E008926EC /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				28FCF8C02A65745E008926EC /* WebConfigComponent.swift */,
+				28FCF8C02A65745E008926EC /* WebConfig.swift */,
 				28FCF8C12A65745E008926EC /* BaseWebView.swift */,
 				28FCF8C22A65745E008926EC /* LAWebView.swift */,
 				28FCF8C32A65745E008926EC /* WebUIComponent.swift */,
-				28FCF8C42A65745E008926EC /* WebScriptComponent.swift */,
 				28FCF8C52A65745E008926EC /* LAWebView.h */,
 				28FCF8D22A66E89F008926EC /* LAJavaScript.swift */,
 			);
@@ -281,8 +278,7 @@
 				28FCF8C82A65745E008926EC /* LAWebView.swift in Sources */,
 				28FCF8C72A65745E008926EC /* BaseWebView.swift in Sources */,
 				28FCF8C92A65745E008926EC /* WebUIComponent.swift in Sources */,
-				28FCF8CA2A65745E008926EC /* WebScriptComponent.swift in Sources */,
-				28FCF8C62A65745E008926EC /* WebConfigComponent.swift in Sources */,
+				28FCF8C62A65745E008926EC /* WebConfig.swift in Sources */,
 				28FCF8D32A66E89F008926EC /* LAJavaScript.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

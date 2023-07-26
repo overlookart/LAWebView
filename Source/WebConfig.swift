@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-open class WebConfigComponent: WKWebViewConfiguration {
+open class WebConfig: WKWebViewConfiguration {
     override public init() {
         super.init()
     }
@@ -18,7 +18,7 @@ open class WebConfigComponent: WKWebViewConfiguration {
     ///   - processPool: 进程池
     ///   - userContentController: 内容控制器
     ///   - websiteDataStore: 数据存储
-    init(preferences: WKPreferences? = nil, processPool: WKProcessPool? = nil, userContentController: WKUserContentController? = nil, websiteDataStore: WKWebsiteDataStore? = nil) {
+    public init(preferences: WKPreferences? = nil, processPool: WKProcessPool? = nil, userContentController: WKUserContentController? = nil, websiteDataStore: WKWebsiteDataStore? = nil) {
         super.init()
         //UserAgent字符串中使用的应用程序名称。
 //        self.applicationNameForUserAgent = ""
@@ -131,12 +131,6 @@ open class WebConfigComponent: WKWebViewConfiguration {
         super.setURLSchemeHandler(urlSchemeHandler, forURLScheme: urlScheme)
     }
     
-    func addUserScript(script: LAUserScript?) {
-        if let s = script {
-            self.userContentController.addUserScript(s)
-            
-        }
-    }
 }
 
 extension WKWebViewConfiguration {
@@ -145,7 +139,7 @@ extension WKWebViewConfiguration {
     /// - Parameters:
     ///   - handler: 消息处理
     ///   - name: 脚本消息名称
-    func addScriptMessageHandler(_ handler: WKScriptMessageHandler, name: String) {
+    public func addScriptMessageHandler(_ handler: WKScriptMessageHandler, name: String) {
         userContentController.removeScriptMessageHandler(forName: name)
         userContentController.add(handler, name: name)
     }
@@ -160,7 +154,7 @@ extension WKWebViewConfiguration {
     ///   - injectionTime: 注入时间
     ///   - forMainFrameOnly: 是否仅在主Frame注入
     ///   - world: 关键词
-    func addUserScript(script: String, injectionTime: WKUserScriptInjectionTime, forMainFrameOnly: Bool, world: String? = nil) {
+    public func addUserScript(script: String, injectionTime: WKUserScriptInjectionTime, forMainFrameOnly: Bool, world: String? = nil) {
         let userScript = WKUserScript(source: script, injectionTime: injectionTime, forMainFrameOnly: forMainFrameOnly)
         addUserScript(script: userScript)
     }
@@ -171,7 +165,7 @@ extension WKWebViewConfiguration {
     ///   - injectionTime: 注入时间
     ///   - forMainFrameOnly: 是否仅在主Document注入
     ///   - world: 关键词
-    func addUserScript(fileName: String, injectionTime: WKUserScriptInjectionTime, forMainFrameOnly: Bool, world: String? = nil) throws {
+    public func addUserScript(fileName: String, injectionTime: WKUserScriptInjectionTime, forMainFrameOnly: Bool, world: String? = nil) throws {
         do {
             let source = try String(contentsOfFile: Bundle.main.path(forResource: fileName, ofType: "js") ?? "", encoding: .utf8)
             let userScript = WKUserScript(source: source, injectionTime: injectionTime, forMainFrameOnly: forMainFrameOnly)
@@ -188,7 +182,7 @@ extension WKWebViewConfiguration {
     }
     
     /// 移除所有的用户脚本
-    func removeAllUserScript() {
+    public func removeAllUserScript() {
         if userContentController.userScripts.count > 0 {
             userContentController.removeAllUserScripts()
         }
@@ -197,13 +191,13 @@ extension WKWebViewConfiguration {
     //MARK: - UserRule
     /// 添加用户过滤规则
     @available(iOS 11.0, *)
-    func addUserRule(rulelist: WKContentRuleList) {
+    public func addUserRule(rulelist: WKContentRuleList) {
         userContentController.add(rulelist)
     }
     
     /// 移除用户过滤规则
     @available(iOS 11.0, *)
-    func removeUserRule(rulelist: WKContentRuleList) {
+    public func removeUserRule(rulelist: WKContentRuleList) {
         userContentController.remove(rulelist)
     }
 }

@@ -13,7 +13,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let web = LAWebView(config: WebConfigComponent())
+        let webConfig = WebConfig()
+        let js = """
+            var meta = document.createElement('meta');
+            meta.setAttribute('name', 'viewport');
+            meta.setAttribute('content', 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no');
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        """
+        webConfig.addUserScript(script: js, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        let web = LAWebView(config: webConfig)
         web.backgroundColor = .orange
         web.frame = view.frame
         view.addSubview(web)
@@ -41,23 +49,6 @@ class ViewController: UIViewController {
             debugPrint(error)
         }
         
-        
-        /// 滚动代理
-        web.scrollDelegates = (DidScroll:{
-            debugPrint("滑动中...")
-        },BeginDragging:{
-            debugPrint("开始拖拽")
-        },WillEndDragging:{ point in
-            debugPrint("将要结束拖拽")
-        },EndDragging:{
-            debugPrint("结束拖拽")
-        },BeginDecelerating:{
-            debugPrint("开始减速")
-        },EndDecelerating:{
-            debugPrint("停止减速")
-        },DidScrollToTop:{
-            debugPrint("滑动到顶部")
-        })
         
         /// navigation
         web.navigationDelegates = (DecidePolicyNavigationAction:{ navAction in

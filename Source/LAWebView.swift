@@ -9,9 +9,7 @@ import UIKit
 import WebKit
 open class LAWebView: BaseWebView {
     //配置组件
-    private(set) var configComponent: WebConfigComponent?
-    //脚本组件
-    private(set) var scriptComponent: WebScriptComponent?
+    private(set) var config: WebConfig?
     //web UI 组件
     private(set) var webUIComponent: WebUIComponent?
     
@@ -32,15 +30,11 @@ open class LAWebView: BaseWebView {
     /// - Parameters:
     ///   - config: 配置组件
     ///   - script: 脚本组件
-    convenience public init(config: WebConfigComponent, script: WebScriptComponent? = nil, webUI: WebUIComponent? = nil) {
+    convenience public init(config: WebConfig, webUI: WebUIComponent? = nil) {
         self.init(frame: CGRect.zero, configuration: config)
-        self.configComponent = config
-        self.scriptComponent = script
+        self.config = config
         self.webUIComponent = webUI
         
-        if let _ = self.scriptComponent, let _ = self.configComponent {
-            self.scriptComponent?.setupScripts(userContentController: self.configComponent!.userContentController)
-        }
         if let _ = self.webUIComponent {
             self.uiDelegate = self.webUIComponent
         }
