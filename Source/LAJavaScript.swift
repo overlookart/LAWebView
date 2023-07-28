@@ -53,6 +53,7 @@ enum DocumentApi {
     case scrollWidth
     /// 元素内容高度
     case scrollHeight
+    /// 元素的所有属性节点的实时集合
     case attributes
     /// 元素的子元素个数
     case childElementCount
@@ -81,6 +82,16 @@ enum DocumentApi {
     case getElementsByTagName(String)
     /// 返回一个包含了所有拥有指定 class 的子元素的 HTML 集合HTMLCollection
     case getElementsByClassName(String)
+    /// 返回与指定的选择器组匹配的元素的后代的第一个元素
+    case querySelector(String)
+    /// 将一个给定的元素节点插入到相对于被调用的元素的给定的一个位置
+    /// @param position: beforebegin在该元素本身的前面, afterbegin只在该元素当中，在该元素第一个子孩子前面, beforeend只在该元素当中，在该元素最后一个子孩子后面, afterend在该元素本身的后面
+    /// @param element: 要插入到树中的元素
+    case insertAdjacentElement(position:String, element:String)
+    /// 将指定的html文本解析为 Element 元素，并将结果节点插入到 DOM 树中的指定位置
+    case insertAdjacentHTML(position:String, htmlStr: String)
+    /// 将一个给定的文本节点插入在相对于被调用的元素给定的位置
+    case insertAdjacentText(position:String, textEle: String)
 }
 
 extension DocumentApi: JavaScriptSyntax {
@@ -124,7 +135,10 @@ extension DocumentApi: JavaScriptSyntax {
             case .getAttribute(let attributeName): return "getAttribute('\(attributeName)')"
             case .getElementsByTagName(let tagName): return "getElementsByTagName('\(tagName)')"
             case .getElementsByClassName(let className): return "getElementsByClassName('\(className)')"
-            
+            case .querySelector(let selectors): return "querySelector('\(selectors)')"
+            case .insertAdjacentElement(let position, let element): return "insertAdjacentElement(\(position),\(element)"
+            case .insertAdjacentHTML(let position, let htmlStr): return "insertAdjacentHTML(\(position),\(htmlStr))"
+            case .insertAdjacentText(let position, let textEle): return "insertAdjacentText(\(position),\(textEle))"
         }
     }
 }
