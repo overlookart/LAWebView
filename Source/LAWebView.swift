@@ -40,6 +40,9 @@ open class LAWebView: BaseWebView {
         }
         
     }
+    public init(config: WebConfig) {
+        super.init(frame: .zero, configuration: config)
+    }
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
 

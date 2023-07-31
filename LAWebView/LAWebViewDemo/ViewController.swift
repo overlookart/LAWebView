@@ -21,7 +21,7 @@ class ViewController: UIViewController {
             document.getElementsByTagName('head')[0].appendChild(meta);
         """
         webConfig.addUserScript(script: js, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-        let web = LAWebView(config: webConfig)
+        let web = WebView(config: webConfig)
         web.backgroundColor = .orange
         web.frame = view.frame
         view.addSubview(web)
