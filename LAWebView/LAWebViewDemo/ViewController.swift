@@ -21,8 +21,8 @@ class ViewController: UIViewController {
             document.getElementsByTagName('head')[0].appendChild(meta);
         """
         webConfig.addUserScript(script: js, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-        
-        let web = LAWebView(config: webConfig)
+
+        let web = WebView(config: webConfig)
         web.backgroundColor = .orange
         web.frame = view.frame
         view.addSubview(web)
@@ -68,9 +68,10 @@ class ViewController: UIViewController {
             return (AuthChallenge:URLSession.AuthChallengeDisposition.rejectProtectionSpace,Credential: nil)
         },DidFinishNavigation: { nav in
             debugPrint("导航完成")
-            web.runJavaScript(js: .getElement(type: .Id("Playground"), handler: { result, error in
+            web.runJavaScript(js: LAJSSnippet.getElement(type: .Id("Playground"), handler: { result, error in
                 debugPrint(result,error)
             }))
+            
         },DidFailNavigation:{ nav, err in
             debugPrint("导航失败", err)
         },DidFailProvisional:{ nav, err in
