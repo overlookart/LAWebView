@@ -67,9 +67,10 @@ class ViewController: UIViewController {
             return (AuthChallenge:URLSession.AuthChallengeDisposition.rejectProtectionSpace,Credential: nil)
         },DidFinishNavigation: { nav in
             debugPrint("导航完成")
-            web.runJavaScript(js: .getElement(type: .Id("Playground"), handler: { result, error in
+            web.runJavaScript(js: LAJSSnippet.getElement(type: .Id("Playground"), handler: { result, error in
                 debugPrint(result,error)
             }))
+            
         },DidFailNavigation:{ nav, err in
             debugPrint("导航失败", err)
         },DidFailProvisional:{ nav, err in

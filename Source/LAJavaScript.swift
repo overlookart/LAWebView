@@ -9,7 +9,7 @@ import Foundation
 
 public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
-private protocol JavaScriptAPI {
+public protocol JavaScriptAPI {
     var js: String { get }
     var handler: LAJSHandler? { get }
     func makeJS(_ documentApis: DocumentApi...) -> String
@@ -22,7 +22,7 @@ private protocol JavaScriptSyntax {
 
 
 /// Dom 语法
-enum DocumentApi {
+public enum DocumentApi {
     case window
     case document
     case body
@@ -84,7 +84,7 @@ public enum LAJSSnippet {
 
 
 extension LAJSSnippet: JavaScriptAPI {
-    var js: String {
+    public var js: String {
         switch self {
             case .getElement(let type, let index, _):
                 
@@ -109,7 +109,7 @@ extension LAJSSnippet: JavaScriptAPI {
         }
     }
     
-    var handler: LAJSHandler? {
+    public var handler: LAJSHandler? {
         switch self {
             case .getElement(_, _, let handler):
                 return handler
@@ -122,11 +122,8 @@ extension LAJSSnippet: JavaScriptAPI {
         }
     }
     
-    func makeJS(_ documentApis: DocumentApi...) -> String {
-         let str =  documentApis.map{
-            
-            return $0.code
-        }.joined(separator: ".")
+    public func makeJS(_ documentApis: DocumentApi...) -> String {
+         let str =  documentApis.map{ $0.code }.joined(separator: ".")
         print("abc",str)
         return str
     }

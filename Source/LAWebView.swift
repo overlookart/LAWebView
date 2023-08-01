@@ -73,9 +73,11 @@ extension LAWebView {
         load(URLRequest(url: url))
     }
     
-    public func runJavaScript(js: LAJSSnippet){
+    public func runJavaScript(js: JavaScriptAPI){
         self.evaluateJavaScript(js.js, completionHandler: js.handler)
     }
+    
+    
     
     @available(iOS 13.0, *)
     public func viewpointSnapshot() async -> UIImage? {
