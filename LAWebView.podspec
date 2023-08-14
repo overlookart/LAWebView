@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "LAWebView"
-  spec.version      = "0.1.0"
+  spec.version      = "0.1.1"
   spec.summary      = "LAWebView 功能扩展"
 
   # This description is used to generate tags and improve search results.
