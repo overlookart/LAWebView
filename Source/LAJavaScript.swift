@@ -9,16 +9,41 @@ import Foundation
 
 public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
-public protocol JavaScriptAPI {
-    var js: String { get }
-    var handler: LAJSHandler? { get }
-    func makeJS(_ documentApis: DocumentApi...) -> String
+
+/// document 属性
+public enum DocumentAttr: String {
+    case window
+    case document
+    case body
+    case head
+}
+
+/// document 方法
+public enum DocumentFunc {
+    case getElementById(String)
+    case getElementsByName(String)
 }
 
 
-private protocol JavaScriptSyntax {
-    var code: String { get }
+extension DocumentAttr: JavaScriptSyntax {
+    public var code: String { return self.rawValue }
 }
+
+extension DocumentFunc: JavaScriptSyntax {
+    public var code: String {
+        switch self {
+            case .getElementById(let id):
+                return "getElementById('\(id)')"
+            case .getElementsByName(let name):
+                return "getElementsByName('\(name)')"
+        }
+    }
+}
+
+struct DocumentAbc {
+    
+}
+
 
 
 /// Dom 语法
@@ -95,7 +120,7 @@ public enum DocumentApi {
 }
 
 extension DocumentApi: JavaScriptSyntax {
-    var code: String {
+    public var code: String {
         switch self {
             case .window: return "window"
             case .document: return "document"
@@ -209,7 +234,8 @@ extension LAJSSnippet: JavaScriptAPI {
     
     public func makeJS(_ documentApis: DocumentApi...) -> String {
          let str =  documentApis.map{ $0.code }.joined(separator: ".")
-        print("abc",str)
+        debugPrint("javascript://\(str)")
+        debugPrint(DocumentAttr.window.rawValue)
         return str
     }
 }

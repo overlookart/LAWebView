@@ -30,22 +30,22 @@ class ViewController: UIViewController {
         
         /// webObserves
         web.webObserves = (Title:{ title in
-            debugPrint("web->title:",title)
+            debugPrint("webObserves://title->",title)
         },Url:{ url in
-            debugPrint("web->url:",url)
+            debugPrint("webObserves://:url->",url)
         },Loading:{ isLoading in
-            debugPrint("web->isLoading:",isLoading)
+            debugPrint("webObserves://isLoading->",isLoading)
         },Progress:{ progress in
-            debugPrint("web->progress:",progress)
+            debugPrint("webObserves://progress->",progress)
         },CanGoBack:{ canGoBack in
-            debugPrint("web->canGoBack:",canGoBack)
+            debugPrint("webObserves://canGoBack->",canGoBack)
         },CanGoForward:{ canGoForward in
-            debugPrint("web->canGoForward:",canGoForward)
+            debugPrint("webObserves://canGoForward->",canGoForward)
         })
         
         do {
             //https://developer.mozilla.org/zh-CN/docs/Web/API/Document
-            try web.loadUrl(urlStr: "https://swift.gg")
+            try web.loadUrl(urlStr: "https://swiftgg.team")
         } catch  {
             debugPrint(error)
         }
