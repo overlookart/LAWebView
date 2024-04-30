@@ -11,40 +11,22 @@ public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
 
 /// document 属性
-public enum DocumentAttr: String {
+public enum Document: String {
     case window
     case document
     case body
     case head
-}
-
-/// document 方法
-public enum DocumentFunc {
-    case getElementById(String)
-    case getElementsByName(String)
-}
-
-
-extension DocumentAttr: JavaScriptSyntax {
-    public var code: String { return self.rawValue }
-}
-
-extension DocumentFunc: JavaScriptSyntax {
-    public var code: String {
-        switch self {
-            case .getElementById(let id):
-                return "getElementById('\(id)')"
-            case .getElementsByName(let name):
-                return "getElementsByName('\(name)')"
-        }
+    
+    static func getElement(ById id: String) -> String {
+        return "getElementById('\(id)')"
     }
-}
-
-struct DocumentAbc {
+    
+    static func getElements(ByName name: String) -> String {
+        return "getElementsByName('\(name)')"
+    }
+    
     
 }
-
-
 
 /// Dom 语法
 public enum DocumentApi {
@@ -235,7 +217,7 @@ extension LAJSSnippet: JavaScriptAPI {
     public func makeJS(_ documentApis: DocumentApi...) -> String {
          let str =  documentApis.map{ $0.code }.joined(separator: ".")
         debugPrint("javascript://\(str)")
-        debugPrint(DocumentAttr.window.rawValue)
+        debugPrint(Document.getElement(ById: "body"))
         return str
     }
 }
