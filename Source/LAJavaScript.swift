@@ -9,57 +9,38 @@ import Foundation
 
 public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
-
-/// document 属性
-public enum Document: String {
-    case window
-    case document
-    case body
-    case head
+public enum DomSyntax: String  {
+    /// Properties
+    case window, document, body, head
     
-    static func getElement(ById id: String) -> String {
-        return "getElementById('\(id)')"
-    }
+    case clientLeft, clientTop, clientWidth, clientHeight
     
-    static func getElements(ByName name: String) -> String {
-        return "getElementsByName('\(name)')"
-    }
+    case scrollLeft, scrollTop, scrollWidth, scrollHeight
     
-    
+    /// Methods
+    case getElementById, getElementsByName, getElementsByTagName, getElementsByClassName
+    case item
+    case createElement
+    case appendChild
 }
 
 /// Dom 语法
 public enum DocumentApi {
-    case window
-    case document
-    case body
-    case head
-    case getElementById(String)
-    case getElementsByName(String)
+    case window, document, body, head
+    case getElementById(String), getElementsByName(String), getElementsByTagName(String), getElementsByClassName(String)
+    /// 从 HTML 集合HTMLCollection 通过下标取出某个元素
     case item(UInt)
-    
-    
     
     case createElement(String)
     case appendChild(String)
     
     // Element API
     /// 表示一个元素的左边框的宽度
-    case clientLeft
-    /// 一个元素顶部边框的宽度
-    case clientTop
-    /// 一个元素宽度
-    case clientWidth
-    /// 一个元素高度
-    case clientHeight
+    case clientLeft, clientTop, clientWidth, clientHeight
+    
     /// 读取或设置元素滚动条到元素左边的距离
-    case scrollLeft
-    /// 获取或设置一个元素的内容垂直滚动的像素值
-    case scrollTop
-    /// 元素内容宽度
-    case scrollWidth
-    /// 元素内容高度
-    case scrollHeight
+    case scrollLeft, scrollTop, scrollWidth, scrollHeight
+    
     /// 元素的所有属性节点的实时集合
     case attributes
     /// 元素的子元素个数
@@ -85,10 +66,7 @@ public enum DocumentApi {
     case setAttribute(String, String)
     case getAttributeNames
     case getAttribute(String)
-    /// 返回一个动态的包含所有指定标签名的元素的 HTML 集合HTMLCollection
-    case getElementsByTagName(String)
-    /// 返回一个包含了所有拥有指定 class 的子元素的 HTML 集合HTMLCollection
-    case getElementsByClassName(String)
+    
     /// 返回与指定的选择器组匹配的元素的后代的第一个元素
     case querySelector(String)
     /// 将一个给定的元素节点插入到相对于被调用的元素的给定的一个位置
@@ -104,28 +82,28 @@ public enum DocumentApi {
 extension DocumentApi: JavaScriptSyntax {
     public var code: String {
         switch self {
-            case .window: return "window"
-            case .document: return "document"
-            case .body: return "body"
-            case .head: return "head"
-            case .getElementById(let id): return "getElementById('\(id)')"
-            case .getElementsByName(let name): return "getElementsByName('\(name)')"
+            case .window: return coding(Dom: .window)
+            case .document: return coding(Dom: .document)
+            case .body: return coding(Dom: .body)
+            case .head: return coding(Dom: .head)
+            case .getElementById(let id): return coding(Dom: .getElementById, params: id)
+            case .getElementsByName(let name): return coding(Dom: .getElementsByName, params: name)
+            case .getElementsByTagName(let tagName): return coding(Dom: .getElementsByTagName, params: tagName)
+            case .getElementsByClassName(let className): return coding(Dom: .getElementsByClassName, params: className)
+            case .item(let index): return coding(Dom: .item, params: "\(index)")
             
-            case .item(let index): return "item(\(index))"
-            
-            
-            
-            case .createElement(let tagName): return "createElement('\(tagName)')"
-            case .appendChild(let ele): return "appendChild(\(ele))"
+            case .createElement(let tagName): return coding(Dom: .createElement, params: tagName)
+                
+            case .appendChild(let ele): return coding(Dom: .appendChild, params: ele)
               
-            case .clientLeft: return "clientLeft"
-            case .clientTop: return "clientTop"
-            case .clientWidth: return "clientWidth"
-            case .clientHeight: return "clientHeight"
-            case .scrollLeft: return "scrollLeft"
-            case .scrollTop: return "scrollTop"
-            case .scrollWidth: return "scrollWidth"
-            case .scrollHeight: return "scrollHeight"
+            case .clientLeft: return coding(Dom: .clientLeft)
+            case .clientTop: return coding(Dom: .clientTop)
+            case .clientWidth: return coding(Dom: .clientWidth)
+            case .clientHeight: return coding(Dom: .clientHeight)
+            case .scrollLeft: return coding(Dom: .scrollLeft)
+            case .scrollTop: return coding(Dom: .scrollTop)
+            case .scrollWidth: return coding(Dom: .scrollWidth)
+            case .scrollHeight: return coding(Dom: .scrollHeight)
             case .attributes: return "attributes"
             case .childElementCount: return "childElementCount"
             case .children: return "children"
@@ -140,13 +118,28 @@ extension DocumentApi: JavaScriptSyntax {
             case .setAttribute(let name, let value): return "setAttribute('\(name)','\(value)')"
             case .getAttributeNames: return "getAttributeNames()"
             case .getAttribute(let attributeName): return "getAttribute('\(attributeName)')"
-            case .getElementsByTagName(let tagName): return "getElementsByTagName('\(tagName)')"
-            case .getElementsByClassName(let className): return "getElementsByClassName('\(className)')"
+            
             case .querySelector(let selectors): return "querySelector('\(selectors)')"
             case .insertAdjacentElement(let position, let element): return "insertAdjacentElement(\(position),\(element)"
             case .insertAdjacentHTML(let position, let htmlStr): return "insertAdjacentHTML(\(position),\(htmlStr))"
             case .insertAdjacentText(let position, let textEle): return "insertAdjacentText(\(position),\(textEle))"
         }
+    }
+    
+    public func coding(Dom: DomSyntax, params: String...) -> String {
+        var code = Dom.rawValue
+        if params.count > 0 {
+// MARK: 需要关注不通类型的参数如何转化为 String
+            let ps = params.map {
+                if Int($0) != nil {
+                    return $0
+                }else{
+                    return "'\($0)'"
+                }
+            }
+            code = code + "(\(ps.joined(separator: ",")))"
+        }
+        return code
     }
 }
 
@@ -217,7 +210,10 @@ extension LAJSSnippet: JavaScriptAPI {
     public func makeJS(_ documentApis: DocumentApi...) -> String {
          let str =  documentApis.map{ $0.code }.joined(separator: ".")
         debugPrint("javascript://\(str)")
-        debugPrint(Document.getElement(ById: "body"))
         return str
+    }
+    
+    public static func testSyntax(){
+        debugPrint("testSyntax:",DocumentApi.createElement("p").code)
     }
 }

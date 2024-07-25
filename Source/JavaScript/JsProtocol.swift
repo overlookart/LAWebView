@@ -15,4 +15,5 @@ public protocol JavaScriptAPI {
 
 public protocol JavaScriptSyntax {
     var code: String { get }
+    func coding(Dom: DomSyntax, params: String...) -> String 
 }
