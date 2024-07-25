@@ -72,6 +72,8 @@ class ViewController: UIViewController {
                 debugPrint(result,error)
             }))
             
+        
+            
         },DidFailNavigation:{ nav, err in
             debugPrint("导航失败", err)
         },DidFailProvisional:{ nav, err in
@@ -81,6 +83,12 @@ class ViewController: UIViewController {
         })
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+    }
+    
 
 }
 

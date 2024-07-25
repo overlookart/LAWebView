@@ -17,14 +17,18 @@ public enum Document: String {
     case body
     case head
     
-    static func getElement(ById id: String) -> String {
-        return "getElementById('\(id)')"
+    func getElement(ById id: String) -> String {
+        return self.rawValue + ".getElementById('\(id)')"
     }
     
-    static func getElements(ByName name: String) -> String {
-        return "getElementsByName('\(name)')"
+    func getElements(ByName name: String) -> String {
+        return self.rawValue + ".getElementsByName('\(name)')"
     }
     
+    
+}
+
+struct SyntaxTree {
     
 }
 
@@ -217,7 +221,7 @@ extension LAJSSnippet: JavaScriptAPI {
     public func makeJS(_ documentApis: DocumentApi...) -> String {
          let str =  documentApis.map{ $0.code }.joined(separator: ".")
         debugPrint("javascript://\(str)")
-        debugPrint(Document.getElement(ById: "body"))
+        debugPrint(Document.document.getElement(ById: "body"))
         return str
     }
 }
