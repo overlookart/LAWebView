@@ -15,5 +15,9 @@ public protocol JavaScriptAPI {
 
 public protocol JavaScriptSyntax {
     var code: String { get }
-    func coding(Dom: DomSyntax, params: String...) -> String 
+    
+    /// 参数是否字符化
+    var paramStr: Bool { get }
+    func coding(Dom: DomSyntax, params: String...) -> String
+    func coding(Dom: DomSyntax, paramList: [String]) -> String
 }

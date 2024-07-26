@@ -17,11 +17,19 @@ public enum DomSyntax: String  {
 
     case scrollLeft, scrollTop, scrollWidth, scrollHeight
     
+    case childElementCount, children, firstElementChild, lastElementChild, previousElementSibling, nextElementSibling
+    
+    case id, tagName, className, classList, attributes
+    
+    case innerHTML, outerHTML
+    
     /// Methods
     case getElementById, getElementsByName, getElementsByTagName, getElementsByClassName
     case item
+    
     case createElement
     case appendChild
+    case after
 }
 
 struct SyntaxTree {
@@ -31,42 +39,28 @@ struct SyntaxTree {
 /// Dom 语法
 public enum DocumentApi {
     case window, document, body, head
-    case getElementById(String), getElementsByName(String), getElementsByTagName(String), getElementsByClassName(String)
-    /// 从 HTML 集合HTMLCollection 通过下标取出某个元素
-    case item(UInt)
     
-    case createElement(String)
-    case appendChild(String)
-    
-    // Element API
     /// 表示一个元素的左边框的宽度
     case clientLeft, clientTop, clientWidth, clientHeight
     
     /// 读取或设置元素滚动条到元素左边的距离
     case scrollLeft, scrollTop, scrollWidth, scrollHeight
     
-    /// 元素的所有属性节点的实时集合
-    case attributes
-    /// 元素的子元素个数
-    case childElementCount
-    /// 元素的子元素集合
-    case children
-    /// 元素的第一个子元素
-    case firstElementChild
-    /// 元素的最后一个子元素
-    case lastElementChild
-    /// 元素 class 属性的动态 DOMTokenList 集合
-    case classList
+    /// 子元素
+    case childElementCount, children, firstElementChild, lastElementChild, previousElementSibling, nextElementSibling
+    
     /// 获取或设置元素的 class 属性的值
-    case className
+    case id, tagName, className, classList, attributes
+    
     /// 设置或获取 HTML 语法表示的元素的后代
-    case innerHTML
-    /// 获取描述元素（包括其后代）的序列化 HTML 片段
-    case outerHTML
-    /// 返回当前元素的标签名
-    case tagName
-    /// 返回指定元素的命名空间前缀
-    case prefix
+    case innerHTML, outerHTML
+    
+    case getElementById(String), getElementsByName(String), getElementsByTagName(String), getElementsByClassName(String)
+    /// 从 HTML 集合HTMLCollection 通过下标取出某个元素
+    case item(UInt)
+    case after([String])
+    case createElement(String)
+    case appendChild(String)
     case setAttribute(String, String)
     case getAttributeNames
     case getAttribute(String)
@@ -90,6 +84,33 @@ extension DocumentApi: JavaScriptSyntax {
             case .document: return coding(Dom: .document)
             case .body: return coding(Dom: .body)
             case .head: return coding(Dom: .head)
+            
+            case .clientLeft: return coding(Dom: .clientLeft)
+            case .clientTop: return coding(Dom: .clientTop)
+            case .clientWidth: return coding(Dom: .clientWidth)
+            case .clientHeight: return coding(Dom: .clientHeight)
+                
+            case .scrollLeft: return coding(Dom: .scrollLeft)
+            case .scrollTop: return coding(Dom: .scrollTop)
+            case .scrollWidth: return coding(Dom: .scrollWidth)
+            case .scrollHeight: return coding(Dom: .scrollHeight)
+                
+            case .childElementCount: return coding(Dom: .childElementCount)
+            case .children: return coding(Dom: .children)
+            case .firstElementChild: return coding(Dom: .firstElementChild)
+            case .lastElementChild: return coding(Dom: .lastElementChild)
+            case .previousElementSibling: return coding(Dom: .previousElementSibling)
+            case .nextElementSibling: return coding(Dom: .nextElementSibling)
+            
+            case .id: return coding(Dom: .id)
+            case .tagName: return coding(Dom: .tagName)
+            case .className: return coding(Dom: .className)
+            case .classList: return coding(Dom: .classList)
+            case .attributes: return coding(Dom: .attributes)
+            
+            case .innerHTML: return coding(Dom: .innerHTML)
+            case .outerHTML: return coding(Dom: .outerHTML)
+            
             case .getElementById(let id): return coding(Dom: .getElementById, params: id)
             case .getElementsByName(let name): return coding(Dom: .getElementsByName, params: name)
             case .getElementsByTagName(let tagName): return coding(Dom: .getElementsByTagName, params: tagName)
@@ -97,28 +118,8 @@ extension DocumentApi: JavaScriptSyntax {
             case .item(let index): return coding(Dom: .item, params: "\(index)")
             
             case .createElement(let tagName): return coding(Dom: .createElement, params: tagName)
-                
             case .appendChild(let ele): return coding(Dom: .appendChild, params: ele)
-              
-            case .clientLeft: return coding(Dom: .clientLeft)
-            case .clientTop: return coding(Dom: .clientTop)
-            case .clientWidth: return coding(Dom: .clientWidth)
-            case .clientHeight: return coding(Dom: .clientHeight)
-            case .scrollLeft: return coding(Dom: .scrollLeft)
-            case .scrollTop: return coding(Dom: .scrollTop)
-            case .scrollWidth: return coding(Dom: .scrollWidth)
-            case .scrollHeight: return coding(Dom: .scrollHeight)
-            case .attributes: return "attributes"
-            case .childElementCount: return "childElementCount"
-            case .children: return "children"
-            case .firstElementChild: return "firstElementChild"
-            case .lastElementChild: return "lastElementChild"
-            case .classList: return "classList"
-            case .className: return "className"
-            case .innerHTML: return "innerHTML"
-            case .outerHTML: return "outerHTML"
-            case .tagName: return "tagName"
-            case .prefix: return "prefix"
+            case .after(let eles): return coding(Dom: .after, paramList: eles)
             case .setAttribute(let name, let value): return "setAttribute('\(name)','\(value)')"
             case .getAttributeNames: return "getAttributeNames()"
             case .getAttribute(let attributeName): return "getAttribute('\(attributeName)')"
@@ -130,10 +131,17 @@ extension DocumentApi: JavaScriptSyntax {
         }
     }
     
+    public var paramStr: Bool {
+        switch self {
+            
+            default:
+                false
+        }
+    }
+    
     public func coding(Dom: DomSyntax, params: String...) -> String {
         var code = Dom.rawValue
         if params.count > 0 {
-// MARK: 需要关注不通类型的参数如何转化为 String
             let ps = params.map {
                 if Int($0) != nil {
                     return $0
@@ -141,11 +149,25 @@ extension DocumentApi: JavaScriptSyntax {
                     return "'\($0)'"
                 }
             }
-            code = code + "(\(ps.joined(separator: ",")))"
+            code = code + makeParamList(ps)
         }
         return code
     }
+    
+    public func coding(Dom: DomSyntax, paramList: [String]) -> String {
+        return code + makeParamList(paramList)
+    }
+    
+    
+    /// 构造参数列表
+    /// - Parameter params: 原始参数
+    /// - Returns: 参数列表
+    private func makeParamList(_ params: [String]) -> String {
+        return "(\(params.joined(separator: ",")))"
+    }
 }
+
+
 
 
 
@@ -219,5 +241,6 @@ extension LAJSSnippet: JavaScriptAPI {
     
     public static func testSyntax(){
         debugPrint("testSyntax:",DocumentApi.createElement("p").code)
+        
     }
 }
