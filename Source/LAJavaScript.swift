@@ -11,17 +11,48 @@ public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
 
 public struct JS {
-    var syntax: DomSyntax
+    var syntax: DomSyntax?
+    var grammar: String
     var params: [JSParam]?
+    
+    /// 初始化 JS 语法
+    /// - Parameters:
+    ///   - syntax: 语法枚举，属性名/方法名
+    ///   - params: 参数列表
     init(_ syntax: DomSyntax, _ params: [JSParam]? = nil) {
         self.syntax = syntax
+        self.grammar = syntax.rawValue
         self.params = params
     }
     
+    /// 初始化 JS 语法
+    /// - Parameters:
+    ///   - syntax: 语法枚举，属性名/方法名
+    ///   - params: 可变参数列表
     init(_ syntax: DomSyntax, _ params: JSParam...) {
         self.syntax = syntax
+        self.grammar = syntax.rawValue
         self.params = params
     }
+    
+    /// 初始化 JS 语法
+    /// - Parameters:
+    ///   - grammar: 自定义文法，属性名/方法名
+    ///   - params: 参数列表
+    init(_ grammar: String, _ params: [JSParam]? = nil){
+        self.grammar = grammar
+        self.params = params
+    }
+    
+    /// 初始化 JS 语法
+    /// - Parameters:
+    ///   - grammar: 自定义文法，属性名/方法名
+    ///   - params: 可变参数列表
+    init(_ grammar: String, _ params: JSParam...){
+        self.grammar = grammar
+        self.params = params
+    }
+    
     /// 构造参数列表
     /// - Parameter params: 原始参数
     /// - Returns: 参数列表
@@ -33,11 +64,11 @@ public struct JS {
 
 extension JS: JavaScriptSyntax {
     public var code: String {
-        syntax.rawValue + makeParamList(params)
+        grammar + makeParamList(params)
     }
     
     public func coding(Dom: DomSyntax) -> String {
-        return syntax.rawValue
+        return grammar
     }
     
     public func coding(Dom: DomSyntax, params: JSParam...) -> String {
@@ -302,7 +333,7 @@ extension LAJSSnippet: JavaScriptAPI {
     
     public static func testSyntax(){
         
-        debugPrint("testSyntax:",JS(DomSyntax(rawValue: "abs")!).code)
+        debugPrint("testSyntax:",JS("abc", [.init("def")]).code)
         
     }
 }
