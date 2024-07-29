@@ -9,8 +9,72 @@ import Foundation
 
 public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
+
+public struct JS {
+    var syntax: DomSyntax
+    var params: [JSParam]?
+    init(_ syntax: DomSyntax, _ params: [JSParam]? = nil) {
+        self.syntax = syntax
+        self.params = params
+    }
+    
+    init(_ syntax: DomSyntax, _ params: JSParam...) {
+        self.syntax = syntax
+        self.params = params
+    }
+    /// 构造参数列表
+    /// - Parameter params: 原始参数
+    /// - Returns: 参数列表
+    private func makeParamList(_ params: [JSParam]?) -> String {
+        guard let ps = params else { return "" }
+        return "(\(ps.map({ $0.finalValue }).joined(separator: ",")))"
+    }
+}
+
+extension JS: JavaScriptSyntax {
+    public var code: String {
+        syntax.rawValue + makeParamList(params)
+    }
+    
+    public func coding(Dom: DomSyntax) -> String {
+        return syntax.rawValue
+    }
+    
+    public func coding(Dom: DomSyntax, params: JSParam...) -> String {
+        return ""
+    }
+    
+    public func coding(Dom: DomSyntax, paramList: [JSParam]) -> String {
+        return ""
+    }
+    
+    
+}
+
+public struct JSParam {
+    private var rawValue: String
+    private var isStr: Bool = false
+    var finalValue: String {
+        return isStr ? "'\(rawValue)'" : rawValue
+    }
+    init(_ rawValue: String, _ isStr: Bool = false) {
+        self.rawValue = rawValue
+        self.isStr = isStr
+    }
+    
+    /// 创建一个字符化的参数
+    /// - Parameter rawValue: 原始值
+    /// - Returns: 字符化的参数
+    static func sign(_ rawValue: String) -> JSParam {
+        JSParam(rawValue, true)
+    }
+}
+
 public enum DomSyntax: String  {
-    /// Properties
+    
+// TODO: debgu
+    case console, log, debug, info, error, clear
+// MARK:  Properties
     case window, document, body, head
     
     case clientLeft, clientTop, clientWidth, clientHeight
@@ -23,7 +87,7 @@ public enum DomSyntax: String  {
     
     case innerHTML, outerHTML
     
-    /// Methods
+// MARK:  Methods
     case getElementById, getElementsByName, getElementsByTagName, getElementsByClassName
     case item
     
@@ -32,12 +96,10 @@ public enum DomSyntax: String  {
     case after
 }
 
-struct SyntaxTree {
-    
-}
-
 /// Dom 语法
 public enum DocumentApi {
+    case console, log([JSParam]), debug([JSParam]), info([JSParam]), error([JSParam]), clear
+    
     case window, document, body, head
     
     /// 表示一个元素的左边框的宽度
@@ -55,15 +117,15 @@ public enum DocumentApi {
     /// 设置或获取 HTML 语法表示的元素的后代
     case innerHTML, outerHTML
     
-    case getElementById(String), getElementsByName(String), getElementsByTagName(String), getElementsByClassName(String)
+    case getElementById(JSParam), getElementsByName(JSParam), getElementsByTagName(JSParam), getElementsByClassName(JSParam)
     /// 从 HTML 集合HTMLCollection 通过下标取出某个元素
-    case item(UInt)
-    case after([String])
-    case createElement(String)
-    case appendChild(String)
-    case setAttribute(String, String)
+    case item(JSParam)
+    case after([JSParam])
+    case createElement(JSParam)
+    case appendChild(JSParam)
+    case setAttribute(JSParam, JSParam)
     case getAttributeNames
-    case getAttribute(String)
+    case getAttribute(JSParam)
     
     /// 返回与指定的选择器组匹配的元素的后代的第一个元素
     case querySelector(String)
@@ -77,9 +139,16 @@ public enum DocumentApi {
     case insertAdjacentText(position:String, textEle: String)
 }
 
-extension DocumentApi: JavaScriptSyntax {
+extension DocumentApi {
     public var code: String {
         switch self {
+            case .console: return coding(Dom: .console)
+            case .log(let params): return coding(Dom: .log, paramList: params)
+            case .debug(let params): return coding(Dom: .debug, paramList: params)
+            case .info(let params): return coding(Dom: .info, paramList: params)
+            case .error(let params): return coding(Dom: .error, paramList: params)
+            case .clear: return coding(Dom: .clear, paramList: [])
+            
             case .window: return coding(Dom: .window)
             case .document: return coding(Dom: .document)
             case .body: return coding(Dom: .body)
@@ -115,7 +184,7 @@ extension DocumentApi: JavaScriptSyntax {
             case .getElementsByName(let name): return coding(Dom: .getElementsByName, params: name)
             case .getElementsByTagName(let tagName): return coding(Dom: .getElementsByTagName, params: tagName)
             case .getElementsByClassName(let className): return coding(Dom: .getElementsByClassName, params: className)
-            case .item(let index): return coding(Dom: .item, params: "\(index)")
+            case .item(let index): return coding(Dom: .item, params: index)
             
             case .createElement(let tagName): return coding(Dom: .createElement, params: tagName)
             case .appendChild(let ele): return coding(Dom: .appendChild, params: ele)
@@ -131,31 +200,17 @@ extension DocumentApi: JavaScriptSyntax {
         }
     }
     
-    public var paramStr: Bool {
-        switch self {
-            
-            default:
-                false
-        }
+    
+    func coding(Dom: DomSyntax) -> String {
+        return Dom.rawValue
     }
     
-    public func coding(Dom: DomSyntax, params: String...) -> String {
-        var code = Dom.rawValue
-        if params.count > 0 {
-            let ps = params.map {
-                if Int($0) != nil {
-                    return $0
-                }else{
-                    return "'\($0)'"
-                }
-            }
-            code = code + makeParamList(ps)
-        }
-        return code
+    public func coding(Dom: DomSyntax, params: JSParam...) -> String {
+        return Dom.rawValue + makeParamList(params.map({ $0.finalValue }))
     }
     
-    public func coding(Dom: DomSyntax, paramList: [String]) -> String {
-        return code + makeParamList(paramList)
+    public func coding(Dom: DomSyntax, paramList: [JSParam]) -> String {
+        return Dom.rawValue + makeParamList(paramList.map({ $0.finalValue }))
     }
     
     
@@ -190,6 +245,8 @@ public enum LAJSSnippet {
     case clientHeight(handler: LAJSHandler?)
     case scrollHeight(handler: LAJSHandler?)
     
+    case testCreateElement(tagName: String, handler: LAJSHandler?)
+    
 }
 
 
@@ -200,13 +257,13 @@ extension LAJSSnippet: JavaScriptAPI {
             case .getElement(let type, let index, _):
                 
             if case .Id(let id) = type {
-                return makeJS(.document,.getElementById(id),.outerHTML)
+                return makeJS(.document,.getElementById(.sign(id)),.outerHTML)
             }else if case .Name(let name) = type {
-                return makeJS(.document,.getElementsByName(name),.item(index),.outerHTML)
+                return makeJS(.document,.getElementsByName(.sign(name)),.item(.init("\(index)")),.outerHTML)
             }else if case .TagName(let tagName) = type {
-                return makeJS(.document,.getElementsByTagName(tagName),.item(index),.outerHTML)
+                return makeJS(.document,.getElementsByTagName(.sign(tagName)),.item(.init("\(index)")),.outerHTML)
             }else if case .ClassName(let className) = type {
-                return makeJS(.document,.getElementsByClassName(className),.item(index),.outerHTML)
+                return makeJS(.document,.getElementsByClassName(.sign(className)),.item(.init("\(index)")),.outerHTML)
             }
             return ""
             
@@ -217,6 +274,8 @@ extension LAJSSnippet: JavaScriptAPI {
                 return makeJS(.document,.body,.clientHeight)
             case .scrollHeight(_):
                 return makeJS(.document,.body,.scrollHeight)
+            case .testCreateElement(let tagName, _):
+            return makeJS(.document, .createElement(.sign(tagName)), .outerHTML)
         }
     }
     
@@ -230,6 +289,8 @@ extension LAJSSnippet: JavaScriptAPI {
                 return handler
             case .scrollHeight(let handler):
                 return handler
+            case .testCreateElement(_, let handler):
+                return handler
         }
     }
     
@@ -240,7 +301,8 @@ extension LAJSSnippet: JavaScriptAPI {
     }
     
     public static func testSyntax(){
-        debugPrint("testSyntax:",DocumentApi.createElement("p").code)
+        
+        debugPrint("testSyntax:",JS(DomSyntax(rawValue: "abs")!).code)
         
     }
 }
