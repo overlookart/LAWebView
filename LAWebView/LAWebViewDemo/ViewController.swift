@@ -27,7 +27,6 @@ class ViewController: UIViewController {
         web.frame = view.frame
         view.addSubview(web)
         
-        LAJSSnippet.testSyntax()
         /// webObserves
         web.webObserves = (Title:{ title in
             debugPrint("webObserves://title->",title)
@@ -68,9 +67,11 @@ class ViewController: UIViewController {
             return (AuthChallenge:URLSession.AuthChallengeDisposition.rejectProtectionSpace,Credential: nil)
         },DidFinishNavigation: { nav in
             debugPrint("导航完成")
-            web.runJavaScript(js: LAJSSnippet.testCreateElement(tagName: "p",  handler: { result, error in
+            let userScript = LAJSSentence(sentence: [JS(.document), JS(.createElement, .sign("p")), JS(.outerHTML)], handler: { result, error in
                 debugPrint(result, error)
-            }))
+            })
+            web.runJavaScript(js: userScript)
+            
         },DidFailNavigation:{ nav, err in
             debugPrint("导航失败", err)
         },DidFailProvisional:{ nav, err in
