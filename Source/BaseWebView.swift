@@ -168,6 +168,7 @@ open class BaseWebView: WKWebView {
     }
 }
 
+// MARK: WKNavigationDelegate
 extension BaseWebView: WKNavigationDelegate {
     /// Web是否允许导航
     /// - Parameters:
