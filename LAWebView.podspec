@@ -51,9 +51,9 @@ Pod::Spec.new do |spec|
   #  profile URL.
   #
 
-  spec.author             = { "丫丫的刀了" => "598823426@qq.com" }
+  spec.author             = { "丫丫的刀了" => "overlookart@outlook.com" }
   # Or just: spec.author    = "丫丫的刀了"
-  # spec.authors            = { "丫丫的刀了" => "598823426@qq.com" }
+  # spec.authors            = { "丫丫的刀了" => "overlookart@outlook.com" }
   # spec.social_media_url   = "https://twitter.com/丫丫的刀了"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,7 +90,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Source", "Source/*.swift"
+  spec.source_files  = "Source", "Source/**/*.swift"
   spec.exclude_files = "Source/Exclude"
 
   spec.public_header_files = "Source/*.h"
