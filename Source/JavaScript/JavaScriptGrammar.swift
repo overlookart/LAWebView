@@ -8,11 +8,14 @@
 import Foundation
 public enum JavaScriptGrammar: String  {
     
-// TODO: debgu
-    case console, log, debug, info, error, clear
 // MARK:  Properties
     case window, document, body, head
     
+// MARK: Window Properties
+    /// debgu
+    case console, log, debug, info, error, clear
+    
+// MARK: Document Properties
     case clientLeft, clientTop, clientWidth, clientHeight
 
     case scrollLeft, scrollTop, scrollWidth, scrollHeight
@@ -23,11 +26,14 @@ public enum JavaScriptGrammar: String  {
     
     case innerHTML, outerHTML
     
-// MARK:  Methods
+// MARK: Document Methods
     case getElementById, getElementsByName, getElementsByTagName, getElementsByClassName
     case item
     
     case createElement
     case appendChild
     case after
+    
+// MARK: Window Methods
+    case postMessage
 }

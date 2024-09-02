@@ -17,7 +17,7 @@ public struct JS {
     
     /// 初始化 JS 语法
     /// - Parameters:
-    ///   - syntax: 语法枚举，属性名/方法名
+    ///   - grammar: 语法枚举，属性名/方法名
     ///   - paramList: 参数列表
     public init(_ grammar: JavaScriptGrammar, _ paramList: [JSParam]? = nil) {
         self.grammar = grammar
@@ -27,7 +27,7 @@ public struct JS {
     
     /// 初始化 JS 语法
     /// - Parameters:
-    ///   - syntax: 语法枚举，属性名/方法名
+    ///   - grammar: 语法枚举，属性名/方法名
     ///   - params: 可变参数列表
     public init(_ grammar: JavaScriptGrammar, _ params: JSParam...) {
         self.grammar = grammar
@@ -89,7 +89,7 @@ public struct JSParam {
     var finalValue: String {
         return isStr ? "'\(rawValue)'" : rawValue
     }
-    init(_ rawValue: String, _ isStr: Bool = false) {
+    public init(_ rawValue: String, _ isStr: Bool = false) {
         self.rawValue = rawValue
         self.isStr = isStr
     }
@@ -102,18 +102,27 @@ public struct JSParam {
     }
 }
 
-public struct LAJSSentence: UserJavaScript {
+public struct LAJavaScript: UserJavaScript {
     public var sentence: [JS]
     public var js: String {
         return makeJS(sentence)
     }
     public var handler: LAJSHandler?
     
+    
+    /// 初始化脚本
+    /// - Parameters:
+    ///   - sentence: javascript 语句
+    ///   - handler: 处理回调
     public init(sentence: [JS], handler: LAJSHandler? = nil) {
         self.sentence = sentence
         self.handler = handler
     }
     
+    
+    /// 生成 javascript 脚本
+    /// - Parameter js: js
+    /// - Returns: javascript str
     public func makeJS(_ js: [JS]) -> String {
          let str =  js.map{ $0.code }.joined(separator: ".") + ";"
         debugPrint("javascript://\(str)")

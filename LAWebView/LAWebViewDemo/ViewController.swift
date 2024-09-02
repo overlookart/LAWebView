@@ -67,7 +67,7 @@ class ViewController: UIViewController {
             return (AuthChallenge:URLSession.AuthChallengeDisposition.rejectProtectionSpace,Credential: nil)
         },DidFinishNavigation: { nav in
             debugPrint("导航完成")
-            let userScript = LAJSSentence(sentence: [JS(.document), JS(.createElement, .sign("p")), JS(.outerHTML)], handler: { result, error in
+            let userScript = LAJavaScript(sentence: [JS(.window), JS(.postMessage, JSParam("{'code':201}"), .sign("*"))], handler: { result, error in
                 debugPrint(result, error)
             })
             web.runJavaScript(js: userScript)
