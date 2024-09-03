@@ -41,6 +41,7 @@ open class WebConfig: WKWebViewConfiguration {
         }
         
         
+        
         /**
          网页是否可缩放
          一个布尔值，该值确定WKWebView对象是否应始终允许缩放网页
@@ -185,6 +186,17 @@ extension WKWebViewConfiguration {
     public func removeAllUserScript() {
         if userContentController.userScripts.count > 0 {
             userContentController.removeAllUserScripts()
+        }
+    }
+    
+    
+    /// 设置是否启用 JavaScript
+    /// - Parameter enabled: 是否启用
+    public func setupJavaScriptEnabled(_ enabled: Bool) {
+        if #available(iOS 14.0, *) {
+            defaultWebpagePreferences.allowsContentJavaScript = enabled
+        } else {
+            preferences.javaScriptEnabled = enabled
         }
     }
     

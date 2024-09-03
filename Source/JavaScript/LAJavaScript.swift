@@ -124,7 +124,34 @@ public struct LAJavaScript: UserJavaScript {
     /// - Parameter js: js
     /// - Returns: javascript str
     public func makeJS(_ js: [JS]) -> String {
-         let str =  js.map{ $0.code }.joined(separator: ".") + ";"
+        let str =  js.map{ $0.code }.joined(separator: ".") + ";"
+        debugPrint("javascript://\(str)")
+        return str
+    }
+}
+
+public struct LAJavaScriptBlock: UserJavaScript {
+    
+    public var javaScripts: [LAJavaScript] = []
+    
+    public var js: String {
+        return makeJS(javaScripts)
+    }
+    
+    
+    public var handler: LAJSHandler?
+    
+    public init(javaScripts: [LAJavaScript], handler: LAJSHandler? = nil) {
+        self.javaScripts = javaScripts
+        self.handler = handler
+    }
+    
+    public func makeJS(_ js:[LAJavaScript]) -> String {
+        let makejs = js.map{ $0.js }.joined(separator: "\n")
+        let str =  """
+\(makejs)
+"""
+        
         debugPrint("javascript://\(str)")
         return str
     }

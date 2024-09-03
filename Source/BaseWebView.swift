@@ -9,24 +9,13 @@ import UIKit
 import WebKit
 
 // MARK: - webview监听枚举
-private enum WebObserve {
+private enum WebObserve: String {
     case title
-    case url
+    case URL
     case loading
-    case progress
+    case estimatedProgress
     case canGoBack
     case canGoForward
-    
-    var keyStr: String {
-        switch self {
-            case .title: return "title"
-            case .url: return "URL"
-            case .loading: return "loading"
-            case .progress: return "estimatedProgress"
-            case .canGoBack: return "canGoBack"
-            case .canGoForward: return "canGoForward"
-        }
-    }
 }
 
 open class BaseWebView: WKWebView {
@@ -67,66 +56,66 @@ open class BaseWebView: WKWebView {
         didSet {
             if let webtitle = webObserves?.Title {
                 if let _ = webTitle {
-                    self.removeObserver(self, forKeyPath: WebObserve.title.keyStr)
+                    self.removeObserver(self, forKeyPath: WebObserve.title.rawValue)
                 }
                 webTitle = webtitle
-                self.addObserver(self, forKeyPath: WebObserve.title.keyStr, options: .new, context: nil)
+                self.addObserver(self, forKeyPath: WebObserve.title.rawValue, options: .new, context: nil)
             }
             
             if let weburl = webObserves?.Url {
                 if let _ = webUrl {
-                    self.removeObserver(self, forKeyPath: WebObserve.url.keyStr)
+                    self.removeObserver(self, forKeyPath: WebObserve.URL.rawValue)
                 }
                 webUrl = weburl
-                self.addObserver(self, forKeyPath: WebObserve.url.keyStr,options: .new, context: nil)
+                self.addObserver(self, forKeyPath: WebObserve.URL.rawValue,options: .new, context: nil)
             }
             
             if let webloading = webObserves?.Loading {
                 if let _ = webLoading {
-                    self.removeObserver(self, forKeyPath: WebObserve.loading.keyStr)
+                    self.removeObserver(self, forKeyPath: WebObserve.loading.rawValue)
                 }
                 webLoading = webloading
-                self.addObserver(self, forKeyPath: WebObserve.loading.keyStr, options: .new, context: nil)
+                self.addObserver(self, forKeyPath: WebObserve.loading.rawValue, options: .new, context: nil)
             }
             
             if let webprogress = webObserves?.Progress {
                 if let _ = webProgress {
-                    self.removeObserver(self, forKeyPath: WebObserve.progress.keyStr)
+                    self.removeObserver(self, forKeyPath: WebObserve.estimatedProgress.rawValue)
                 }
                 webProgress = webprogress
-                self.addObserver(self, forKeyPath: WebObserve.progress.keyStr, options: .new, context: nil)
+                self.addObserver(self, forKeyPath: WebObserve.estimatedProgress.rawValue, options: .new, context: nil)
             }
             
             if let webcangoback = webObserves?.CanGoBack {
                 if let _ = webCanGoBack {
-                    self.removeObserver(self, forKeyPath: WebObserve.canGoBack.keyStr)
+                    self.removeObserver(self, forKeyPath: WebObserve.canGoBack.rawValue)
                 }
                 webCanGoBack = webcangoback
-                self.addObserver(self, forKeyPath: WebObserve.canGoBack.keyStr, options: .new, context: nil)
+                self.addObserver(self, forKeyPath: WebObserve.canGoBack.rawValue, options: .new, context: nil)
             }
             
             if let webcangoforward = webObserves?.CanGoForward {
                 if let _ = webCanGoForward {
-                    self.removeObserver(self, forKeyPath: WebObserve.canGoForward.keyStr)
+                    self.removeObserver(self, forKeyPath: WebObserve.canGoForward.rawValue)
                 }
                 webCanGoForward = webcangoforward
-                self.addObserver(self, forKeyPath: WebObserve.canGoForward.keyStr, options: .new, context: nil)
+                self.addObserver(self, forKeyPath: WebObserve.canGoForward.rawValue, options: .new, context: nil)
             }
         }
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == WebObserve.progress.keyStr {
+        if keyPath == WebObserve.estimatedProgress.rawValue {
             webProgress?(Float(self.estimatedProgress))
-        }else if keyPath == WebObserve.title.keyStr {
+        }else if keyPath == WebObserve.title.rawValue {
             webTitle?(self.title ?? "Null")
-        }else if keyPath == WebObserve.url.keyStr {
+        }else if keyPath == WebObserve.URL.rawValue {
             webUrl?(self.url)
-        }else if keyPath == WebObserve.loading.keyStr {
+        }else if keyPath == WebObserve.loading.rawValue {
             webLoading?(self.isLoading)
-        }else if keyPath == WebObserve.canGoBack.keyStr {
+        }else if keyPath == WebObserve.canGoBack.rawValue {
             webCanGoBack?(self.canGoBack)
-        }else if keyPath == WebObserve.canGoForward.keyStr {
+        }else if keyPath == WebObserve.canGoForward.rawValue {
             webCanGoForward?(self.canGoForward)
         }else{
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
@@ -143,27 +132,27 @@ open class BaseWebView: WKWebView {
     
     deinit {
         if let _ = webProgress {
-            self.removeObserver(self, forKeyPath: WebObserve.progress.keyStr)
+            self.removeObserver(self, forKeyPath: WebObserve.estimatedProgress.rawValue)
         }
         
         if let _ = webTitle {
-            self.removeObserver(self, forKeyPath: WebObserve.title.keyStr)
+            self.removeObserver(self, forKeyPath: WebObserve.title.rawValue)
         }
         
         if let _ = webUrl {
-            self.removeObserver(self, forKeyPath: WebObserve.url.keyStr)
+            self.removeObserver(self, forKeyPath: WebObserve.URL.rawValue)
         }
         
         if let _ = webLoading {
-            self.removeObserver(self, forKeyPath: WebObserve.loading.keyStr)
+            self.removeObserver(self, forKeyPath: WebObserve.loading.rawValue)
         }
         
         if let _ = webCanGoBack {
-            self.removeObserver(self, forKeyPath: WebObserve.canGoBack.keyStr)
+            self.removeObserver(self, forKeyPath: WebObserve.canGoBack.rawValue)
         }
         
         if let _ = webCanGoForward {
-            self.removeObserver(self, forKeyPath: WebObserve.canGoForward.keyStr)
+            self.removeObserver(self, forKeyPath: WebObserve.canGoForward.rawValue)
         }
     }
 }

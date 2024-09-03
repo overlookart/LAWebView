@@ -31,6 +31,9 @@ public enum JavaScriptGrammar: String  {
     case item
     
     case createElement
+    
+    case setAttribute
+    
     case appendChild
     case after
     
