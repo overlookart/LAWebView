@@ -11,17 +11,21 @@ public typealias LAJSHandler = ((Any?, Error?) -> Void)
 
 
 public struct JS {
-    var grammar: JavaScriptGrammar?
-    var content: String
+    // 属性/方法体
+    var body: JavaScriptGrammar?
+    
+    // 参数
     var params: [JSParam]?
+    
+    private(set) var content: String
     
     /// 初始化 JS 语法
     /// - Parameters:
     ///   - grammar: 语法枚举，属性名/方法名
     ///   - paramList: 参数列表
-    public init(_ grammar: JavaScriptGrammar, _ paramList: [JSParam]? = nil) {
-        self.grammar = grammar
-        self.content = grammar.rawValue
+    public init(_ body: JavaScriptGrammar, _ paramList: [JSParam]? = nil) {
+        self.body = body
+        self.content = body.rawValue
         self.params = paramList
     }
     
@@ -29,9 +33,9 @@ public struct JS {
     /// - Parameters:
     ///   - grammar: 语法枚举，属性名/方法名
     ///   - params: 可变参数列表
-    public init(_ grammar: JavaScriptGrammar, _ params: JSParam...) {
-        self.grammar = grammar
-        self.content = grammar.rawValue
+    public init(_ body: JavaScriptGrammar, _ params: JSParam...) {
+        self.body = body
+        self.content = body.rawValue
         self.params = params
     }
     
@@ -66,20 +70,6 @@ extension JS: JavaScriptSyntax {
     public var code: String {
         content + makeParamList(params)
     }
-    
-    public func coding(Dom: JavaScriptGrammar) -> String {
-        return content
-    }
-    
-    public func coding(Dom: JavaScriptGrammar, params: JSParam...) -> String {
-        return ""
-    }
-    
-    public func coding(Dom: JavaScriptGrammar, paramList: [JSParam]) -> String {
-        return ""
-    }
-    
-    
 }
 
 /// JavaScript 参数结构体
@@ -102,11 +92,33 @@ public struct JSParam {
     }
 }
 
+/// JavaScript 值类型枚举
+public enum JSValue: JavaScriptSyntax {
+    case Var(name: String)
+    case Let(name: String)
+    case Const(name: String)
+    
+    public var code: String {
+        switch self {
+        case .Var(let name):
+            return "var \(name) = "
+        case .Let(let name):
+            return "let \(name) = "
+        case .Const(let name):
+            return "const \(name) = "
+        }
+    }
+}
+
 public struct LAJavaScript: UserJavaScript {
+    public var value: JSValue?
+    // 语句
     public var sentence: [JS]
+    // 最终的 js 脚本
     public var js: String {
         return makeJS(sentence)
     }
+    // 执行处理
     public var handler: LAJSHandler?
     
     
@@ -114,7 +126,8 @@ public struct LAJavaScript: UserJavaScript {
     /// - Parameters:
     ///   - sentence: javascript 语句
     ///   - handler: 处理回调
-    public init(sentence: [JS], handler: LAJSHandler? = nil) {
+    public init(value: JSValue? = nil, sentence: [JS], handler: LAJSHandler? = nil) {
+        self.value = value
         self.sentence = sentence
         self.handler = handler
     }
@@ -124,8 +137,9 @@ public struct LAJavaScript: UserJavaScript {
     /// - Parameter js: js
     /// - Returns: javascript str
     public func makeJS(_ js: [JS]) -> String {
-        let str =  js.map{ $0.code }.joined(separator: ".") + ";"
-        debugPrint("javascript://\(str)")
+        let name = value?.code ?? ""
+        let str = name + js.map{ $0.code }.joined(separator: ".") + ";"
+        debugPrint("js:\(str)")
         return str
     }
 }
@@ -148,12 +162,9 @@ public struct LAJavaScriptBlock: UserJavaScript {
     
     public func makeJS(_ js:[LAJavaScript]) -> String {
         let makejs = js.map{ $0.js }.joined(separator: "\n")
-        let str =  """
-\(makejs)
-"""
         
-        debugPrint("javascript://\(str)")
-        return str
+        debugPrint("js block:\(makejs)")
+        return makejs
     }
 }
 

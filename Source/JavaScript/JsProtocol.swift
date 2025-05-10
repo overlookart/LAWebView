@@ -9,33 +9,36 @@ import Foundation
 
 /// 用户脚本协议
 public protocol UserJavaScript {
+    // 最终 js 脚本
     var js: String { get }
+    // 执行处理
     var handler: LAJSHandler? { get }
 }
 
-
+// js 脚本语法协议
 public protocol JavaScriptSyntax {
     
     /// js 代码
     var code: String { get }
     
-    /// 编码 Dom语法，适用于 Dom 元素的属性
-    /// - Parameter Dom: Dom语法
+    /// 编码 语法
+    /// - Parameter JSG: js 语法
     /// - Returns: 编码
-    func coding(Dom: JavaScriptGrammar) -> String
+//    func coding(JSG: JavaScriptGrammar) -> String
     
     
-    /// 编码 Dom语法，适用于 Dom 元素的方法，方法有一个或多个参数
+    /// 编码 语法，适用于方法，方法有一个或多个参数
     /// - Parameters:
-    ///   - Dom: Dom: Dom 方法名
-    ///   - params: Dom 方法的参数列表
+    ///   - JSG: js 方法名
+    ///   - params: 方法的参数列表
     /// - Returns: 编码
-    func coding(Dom: JavaScriptGrammar, params: JSParam...) -> String
+//    func coding(JSG: JavaScriptGrammar, params: JSParam...) -> String
     
-    /// 编码 Dom语法，适用于 Dom 元素的方法，方法有参数集合
+    /// 编码 语法，适用于方法，方法有参数集合
     /// - Parameters:
-    ///   - Dom: Dom: Dom 方法名
-    ///   - params: Dom 方法的参数集合
+    ///   - JSG: js 方法名
+    ///   - params: 方法的参数集合
     /// - Returns: 编码
-    func coding(Dom: JavaScriptGrammar, paramList: [JSParam]) -> String
+//    func coding(JSG: JavaScriptGrammar, paramList: [JSParam]) -> String
+    
 }

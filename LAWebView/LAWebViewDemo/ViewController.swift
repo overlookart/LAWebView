@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         
         do {
             //https://developer.mozilla.org/zh-CN/docs/Web/API/Document
-            try webView.loadUrl(urlStr: "https://swiftgg.team")
+            try webView.loadUrl(urlStr: "https://www.swift.org")
         } catch  {
             debugPrint(error)
         }
@@ -93,11 +93,11 @@ class ViewController: UIViewController {
     
     @objc private func testItemAction(){
 
-        let userScript1 = LAJavaScript(sentence: [JS(.document), JS(.createElement,.sign("meta"))])
+        let userScript1 = LAJavaScript(value: .Let(name: "meta1"), sentence: [JS(.document), JS(.createElement,.sign("meta"))])
         let userScript2 = LAJavaScript(sentence: [JS("meta"), JS(.setAttribute, .sign("name"), .sign("viewport"))])
         let userScript3 = LAJavaScript(sentence: [JS("meta"), JS(.setAttribute, .sign("content"), .sign("width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"))])
         let userScript4 = LAJavaScript(sentence: [JS(.document), JS(.head), JS(.appendChild, JSParam("meta"))])
-        let jsBlock = LAJavaScriptBlock(javaScripts: [userScript1,userScript2,userScript3,userScript4]) { result, error in
+        let jsBlock = LAJavaScriptBlock(javaScripts: [userScript1]) { result, error in
             debugPrint(result, error)
         }
         

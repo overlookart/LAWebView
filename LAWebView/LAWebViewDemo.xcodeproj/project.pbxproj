@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		281AF72C2DCF9C5F00BF4CAD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 281AF72B2DCF9C5F00BF4CAD /* README.md */; };
 		285ADCCD2A774BEB005F48BD /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ADCCC2A774BEB005F48BD /* WebView.swift */; };
 		28FCF8BE2A657451008926EC /* LAWebView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 28FCF8BD2A657451008926EC /* LAWebView.podspec */; };
 		28FCF8C62A65745E008926EC /* WebConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C02A65745E008926EC /* WebConfig.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		281AF72B2DCF9C5F00BF4CAD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
 		285ADCCC2A774BEB005F48BD /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		28FCF8BD2A657451008926EC /* LAWebView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LAWebView.podspec; path = ../../LAWebView.podspec; sourceTree = "<group>"; };
 		28FCF8C02A65745E008926EC /* WebConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfig.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		28FCF8BC2A657422008926EC /* LAWebView */ = {
 			isa = PBXGroup;
 			children = (
+				281AF72B2DCF9C5F00BF4CAD /* README.md */,
 				28FCF8BD2A657451008926EC /* LAWebView.podspec */,
 				28FCF8BF2A65745E008926EC /* Source */,
 			);
@@ -271,6 +274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				281AF72C2DCF9C5F00BF4CAD /* README.md in Resources */,
 				28FCF8BE2A657451008926EC /* LAWebView.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
