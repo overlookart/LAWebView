@@ -8,15 +8,18 @@
 import Foundation
 
 /// 用户脚本协议
-public protocol UserJavaScript {
-    // 最终 js 脚本
-    var js: String { get }
+public protocol UserJavaScript: JavaScriptCode {
+    
     // 执行处理
     var handler: LAJSHandler? { get }
 }
 
+public protocol JavaScriptValue: JavaScriptCode {
+    var name: String { get }
+}
+
 // js 脚本语法协议
-public protocol JavaScriptSyntax {
+public protocol JavaScriptCode {
     
     /// js 代码
     var code: String { get }

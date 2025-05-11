@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		281AF72C2DCF9C5F00BF4CAD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 281AF72B2DCF9C5F00BF4CAD /* README.md */; };
+		281AF72E2DD0393C00BF4CAD /* JsHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281AF72D2DD0393C00BF4CAD /* JsHelp.swift */; };
+		281AF7302DD07DEB00BF4CAD /* JSParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281AF72F2DD07DEB00BF4CAD /* JSParam.swift */; };
+		281AF7322DD07E9300BF4CAD /* JSValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281AF7312DD07E9300BF4CAD /* JSValue.swift */; };
+		281AF7342DD0802100BF4CAD /* JSFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281AF7332DD0802100BF4CAD /* JSFunction.swift */; };
 		285ADCCD2A774BEB005F48BD /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ADCCC2A774BEB005F48BD /* WebView.swift */; };
 		28FCF8BE2A657451008926EC /* LAWebView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 28FCF8BD2A657451008926EC /* LAWebView.podspec */; };
 		28FCF8C62A65745E008926EC /* WebConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FCF8C02A65745E008926EC /* WebConfig.swift */; };
@@ -54,6 +58,10 @@
 
 /* Begin PBXFileReference section */
 		281AF72B2DCF9C5F00BF4CAD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
+		281AF72D2DD0393C00BF4CAD /* JsHelp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsHelp.swift; sourceTree = "<group>"; };
+		281AF72F2DD07DEB00BF4CAD /* JSParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSParam.swift; sourceTree = "<group>"; };
+		281AF7312DD07E9300BF4CAD /* JSValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSValue.swift; sourceTree = "<group>"; };
+		281AF7332DD0802100BF4CAD /* JSFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSFunction.swift; sourceTree = "<group>"; };
 		285ADCCC2A774BEB005F48BD /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		28FCF8BD2A657451008926EC /* LAWebView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LAWebView.podspec; path = ../../LAWebView.podspec; sourceTree = "<group>"; };
 		28FCF8C02A65745E008926EC /* WebConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConfig.swift; sourceTree = "<group>"; };
@@ -133,6 +141,10 @@
 				E902C3F72BCF7F30001022C2 /* JsProtocol.swift */,
 				E93E35592C58CA0100856528 /* JavaScriptGrammar.swift */,
 				28FCF8D22A66E89F008926EC /* LAJavaScript.swift */,
+				281AF72D2DD0393C00BF4CAD /* JsHelp.swift */,
+				281AF72F2DD07DEB00BF4CAD /* JSParam.swift */,
+				281AF7312DD07E9300BF4CAD /* JSValue.swift */,
+				281AF7332DD0802100BF4CAD /* JSFunction.swift */,
 			);
 			path = JavaScript;
 			sourceTree = "<group>";
@@ -299,9 +311,13 @@
 			files = (
 				28FCF8C82A65745E008926EC /* LAWebView.swift in Sources */,
 				E902C3F82BCF7F30001022C2 /* JsProtocol.swift in Sources */,
+				281AF7342DD0802100BF4CAD /* JSFunction.swift in Sources */,
+				281AF7322DD07E9300BF4CAD /* JSValue.swift in Sources */,
 				E93E355A2C58CA0100856528 /* JavaScriptGrammar.swift in Sources */,
+				281AF7302DD07DEB00BF4CAD /* JSParam.swift in Sources */,
 				28FCF8C72A65745E008926EC /* BaseWebView.swift in Sources */,
 				28FCF8C92A65745E008926EC /* WebUIComponent.swift in Sources */,
+				281AF72E2DD0393C00BF4CAD /* JsHelp.swift in Sources */,
 				28FCF8C62A65745E008926EC /* WebConfig.swift in Sources */,
 				28FCF8D32A66E89F008926EC /* LAJavaScript.swift in Sources */,
 			);

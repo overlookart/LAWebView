@@ -92,12 +92,13 @@ class ViewController: UIViewController {
     }
     
     @objc private func testItemAction(){
-
-        let userScript1 = LAJavaScript(value: .Let(name: "meta1"), sentence: [JS(.document), JS(.createElement,.sign("meta"))])
-        let userScript2 = LAJavaScript(sentence: [JS("meta"), JS(.setAttribute, .sign("name"), .sign("viewport"))])
-        let userScript3 = LAJavaScript(sentence: [JS("meta"), JS(.setAttribute, .sign("content"), .sign("width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"))])
-        let userScript4 = LAJavaScript(sentence: [JS(.document), JS(.head), JS(.appendChild, JSParam("meta"))])
-        let jsBlock = LAJavaScriptBlock(javaScripts: [userScript1]) { result, error in
+        let jsValue = JSValue.Let(name: "meta1")
+        let userScript1 = LAJavaScript(value: jsValue, sentence: [JS(.document), JS(.createElement,.sign("meta"))])
+        let userScript2 = LAJavaScript(sentence: [JS(jsValue.name), JS(.setAttribute, .sign("name"), .sign("viewport"))])
+        let userScript3 = LAJavaScript(sentence: [JS(jsValue.name), JS(.setAttribute, .sign("content"), .sign("width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"))])
+        let userScript4 = LAJavaScript(sentence: [JS(.document), JS(.head), JS(.appendChild, .init(jsValue.name))])
+        let jsFunc = JSFunction(name: "test", body: [userScript1,userScript2,userScript3,userScript4])
+        let jsBlock = LAJavaScriptBlock(javaScripts: [jsFunc, JS("test", [])]) { result, error in
             debugPrint(result, error)
         }
         

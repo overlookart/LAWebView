@@ -12,7 +12,8 @@ public enum JavaScriptGrammar: String  {
     case window, document, body, head
     
 // MARK: Window Properties
-    /// debgu
+
+// MARK: debgu
     case console, log, debug, info, error, clear
     
 // MARK: Document Properties

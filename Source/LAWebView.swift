@@ -73,7 +73,7 @@ extension LAWebView {
     }
     
     public func runJavaScript(js: UserJavaScript){
-        self.evaluateJavaScript(js.js, completionHandler: js.handler)
+        self.evaluateJavaScript(js.code, completionHandler: js.handler)
     }
     
     
